@@ -6,5 +6,7 @@ root: intro
 chapters:
 - file: Business Problem
 - file: Data Understanding
-- file: Eksplorasi Data
+  sections:
+  - file: Eksplorasi Data
+- file: Preprocessing Data
 - file: Tugas Power BI
