@@ -150,7 +150,7 @@
   
   
   
-    <img src="_static/logo.png">
+    <p class="title logo__title">My sample book</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -176,8 +176,17 @@
         </ul>
         <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="Business%20Problem.html">Business Problem</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Data%20Understanding.html">Data Understanding</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Eksplorasi%20Data.html">Eksplorasi Data</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="Data%20Understanding.html">Data Understanding</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="Eksplorasi%20Data.html">Eksplorasi Data</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="Preprocessing%20Data.html">PrepocessingData</a></li>
+
+
+
+
+
+
 <li class="toctree-l1"><a class="reference internal" href="Tugas%20Power%20BI.html">Tugas Power BI</a></li>
 </ul>
 
@@ -377,21 +386,23 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="welcome-to-your-jupyter-book">
-<h1>Halo!<a class="headerlink" href="#welcome-to-your-jupyter-book" title="Link to this heading">#</a></h1>
-<p>Perkenalkan saya:</p>
-<ul>
-  <li><strong>Nama</strong> : Elvita Dian Prameswari</li>
-  <li><strong>NIM</strong> : 230411100128</li>
-  <li><strong>Email</strong> : <a href="mailto:elvitadianpra@gmail.com">elvitadianpra@gmail.com</a></li>
-</ul>
-
-<p>Saya saat ini menempuh pendidikan di <strong>Universitas Trunojoyo Madura</strong>, program studi <strong>Teknik Informatika</strong>.</p>
+<h1>Welcome to your Jupyter Book<a class="headerlink" href="#welcome-to-your-jupyter-book" title="Link to this heading">#</a></h1>
+<p>This is a small sample book to give you a feel for how book content is
+structured.
+It shows off a few of the major file types, as well as some sample content.
+It does not go in-depth into any particular topic - check out <a class="reference external" href="https://jupyterbook.org">the Jupyter Book documentation</a> for more information.</p>
 <p>Check out the content pages bundled with this sample book to see more.</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="Business%20Problem.html">Business Problem</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Data%20Understanding.html">Data Understanding</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Eksplorasi%20Data.html">Eksplorasi Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Preprocessing%20Data.html">PrepocessingData</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Preprocessing%20Data.html#import-libraries-dan-setup-environment">1. Import Libraries dan Setup Environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Preprocessing%20Data.html#load-data-dan-hasil-outlier-detection">2. Load Data dan Hasil Outlier Detection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Preprocessing%20Data.html#outlier-removal-dan-imputation-dengan-visualisasi">3. Outlier Removal dan Imputation dengan Visualisasi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Preprocessing%20Data.html#feature-scaling-dan-engineering">4. Feature Scaling dan Engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Preprocessing%20Data.html#train-test-split-dan-persiapan-final">5. Train-Test Split dan Persiapan Final</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Preprocessing%20Data.html#summary-dan-next-steps">6. Summary dan Next Steps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Tugas%20Power%20BI.html">Tugas Power BI</a></li>
 </ul>
 </div>
