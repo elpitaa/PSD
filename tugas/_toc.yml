@@ -7,7 +7,7 @@ chapters:
 - file: Business Problem
 - file: Data Understanding
   sections:
-  - file: Eksplorasi Data
+    - file: Eksplorasi Data
 - file: Preprocessing Data
 - file: Tugas Power BI
 - file: Coli Protein & ADASYN Implementation
