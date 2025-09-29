@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>E.coli Protein Localization Analysis &#8212; My sample book</title>
+    <title>Implementasi ADASYN/SMOTE untuk Penyeimbangan Data &#8212; My sample book</title>
   
   
   
@@ -60,6 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'Coli Protein PCA & ADASYN Implementation';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="TUGAS: KLASIFIKASI NAIVE BAYES - E.coli Dataset" href="Klasifikasi%20Naive%20Bayes.html" />
     <link rel="prev" title="Tugas Power BI" href="Tugas%20Power%20BI.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -148,7 +149,7 @@
   
   
   
-     <img src="_static/logo.png"/>
+   <img src="_static/logo.png"/>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -180,7 +181,9 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="Preprocessing%20Data.html">Preprocessing Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Tugas%20Power%20BI.html">Tugas Power BI</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">E.coli Protein Localization Analysis</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Implementasi ADASYN/SMOTE untuk Penyeimbangan Data</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Klasifikasi%20Naive%20Bayes.html">TUGAS: KLASIFIKASI NAIVE BAYES - E.coli Dataset</a></li>
 </ul>
 
     </div>
@@ -366,7 +369,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>E.coli Protein Localization Analysis</h1>
+    <h1>Implementasi ADASYN/SMOTE untuk Penyeimbangan Data</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -376,13 +379,10 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pca-adasyn-implementation-untuk-dataset-e-coli">PCA &amp; ADASYN Implementation untuk Dataset E.coli</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tampilkan-data-dalam-scatter-plot-menggunakan-pca">Tampilkan Data dalam Scatter Plot Menggunakan PCA</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementasi-adasyn-smote-untuk-penyeimbangan-data">Implementasi ADASYN/SMOTE untuk Penyeimbangan Data</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-data-setelah-balancing-dengan-pca">Plotting Data Setelah Balancing dengan PCA</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Implementasi ADASYN/SMOTE untuk Penyeimbangan Data</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-data-setelah-balancing-dengan-pca">Plotting Data Setelah Balancing dengan PCA</a></li>
 </ul>
-</li>
-</ul>
+
             </nav>
         </div>
     </div>
@@ -393,17 +393,7 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="e-coli-protein-localization-analysis">
-<h1>E.coli Protein Localization Analysis<a class="headerlink" href="#e-coli-protein-localization-analysis" title="Link to this heading">#</a></h1>
-<section id="pca-adasyn-implementation-untuk-dataset-e-coli">
-<h2>PCA &amp; ADASYN Implementation untuk Dataset E.coli<a class="headerlink" href="#pca-adasyn-implementation-untuk-dataset-e-coli" title="Link to this heading">#</a></h2>
-<p><strong>Dataset:</strong> E.coli Protein Localization dari UCI Machine Learning Repository<br />
-<strong>Database:</strong> MySQL - Database “Ecoli”<br />
-<strong>Tujuan:</strong> Implementasi PCA untuk visualisasi dan ADASYN/SMOTE untuk balancing data</p>
-<hr class="docutils" />
-<section id="tampilkan-data-dalam-scatter-plot-menggunakan-pca">
-<h3>Tampilkan Data dalam Scatter Plot Menggunakan PCA<a class="headerlink" href="#tampilkan-data-dalam-scatter-plot-menggunakan-pca" title="Link to this heading">#</a></h3>
-<div class="cell docutils container">
+  <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ========================================</span>
 <span class="c1"># IMPORT LIBRARIES &amp; SETUP</span>
@@ -513,7 +503,7 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mencoba koneksi ke MySQL Database &#39;Ecoli&#39;...
-Error koneksi ke database: 1698 (28000): Access denied for user &#39;root&#39;@&#39;localhost&#39;
+Error koneksi ke database: 2003: Can&#39;t connect to MySQL server on &#39;localhost:3306&#39; (Errno 111: Connection refused)
 Fallback: Menggunakan dataset E.coli dari UCI...
 Dataset E.coli sudah ada
 Dataset E.coli berhasil dimuat dari UCI
@@ -995,9 +985,8 @@ Visualisasi data asli selesai!
 </div>
 </div>
 </div>
-</section>
 <section id="implementasi-adasyn-smote-untuk-penyeimbangan-data">
-<h3>Implementasi ADASYN/SMOTE untuk Penyeimbangan Data<a class="headerlink" href="#implementasi-adasyn-smote-untuk-penyeimbangan-data" title="Link to this heading">#</a></h3>
+<h1>Implementasi ADASYN/SMOTE untuk Penyeimbangan Data<a class="headerlink" href="#implementasi-adasyn-smote-untuk-penyeimbangan-data" title="Link to this heading">#</a></h1>
 <p><strong>Tujuan:</strong> Mengatasi ketidakseimbangan kelas pada dataset E.coli<br />
 <strong>Metode:</strong> ADASYN (Adaptive Synthetic Sampling) atau SMOTE sebagai fallback<br />
 <strong>Target:</strong> Menyeimbangkan distribusi kelas untuk meningkatkan performa model</p>
@@ -1166,7 +1155,7 @@ Proses balancing data selesai!
 </div>
 </section>
 <section id="plotting-data-setelah-balancing-dengan-pca">
-<h3>Plotting Data Setelah Balancing dengan PCA<a class="headerlink" href="#plotting-data-setelah-balancing-dengan-pca" title="Link to this heading">#</a></h3>
+<h1>Plotting Data Setelah Balancing dengan PCA<a class="headerlink" href="#plotting-data-setelah-balancing-dengan-pca" title="Link to this heading">#</a></h1>
 <p><strong>Visualisasi:</strong> Scatter plot data hasil balancing dengan marking untuk membedakan:</p>
 <ul class="simple">
 <li><p><strong>Lingkaran</strong> = Data asli dari database</p></li>
@@ -1441,8 +1430,6 @@ Implementasi PCA &amp; ADASYN/SMOTE berhasil diselesaikan!
 </div>
 </div>
 </section>
-</section>
-</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1483,6 +1470,15 @@ Implementasi PCA &amp; ADASYN/SMOTE berhasil diselesaikan!
         <p class="prev-next-title">Tugas Power BI</p>
       </div>
     </a>
+    <a class="right-next"
+       href="Klasifikasi%20Naive%20Bayes.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">TUGAS: KLASIFIKASI NAIVE BAYES - E.coli Dataset</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -1499,13 +1495,10 @@ Implementasi PCA &amp; ADASYN/SMOTE berhasil diselesaikan!
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pca-adasyn-implementation-untuk-dataset-e-coli">PCA &amp; ADASYN Implementation untuk Dataset E.coli</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tampilkan-data-dalam-scatter-plot-menggunakan-pca">Tampilkan Data dalam Scatter Plot Menggunakan PCA</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementasi-adasyn-smote-untuk-penyeimbangan-data">Implementasi ADASYN/SMOTE untuk Penyeimbangan Data</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-data-setelah-balancing-dengan-pca">Plotting Data Setelah Balancing dengan PCA</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Implementasi ADASYN/SMOTE untuk Penyeimbangan Data</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-data-setelah-balancing-dengan-pca">Plotting Data Setelah Balancing dengan PCA</a></li>
 </ul>
-</li>
-</ul>
+
   </nav></div>
 
 </div></div>
