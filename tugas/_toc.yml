@@ -10,7 +10,7 @@ chapters:
       - file: Eksplorasi Data
   - file: Preprocessing Data
   - file: Tugas Power BI
-  - file: Coli Protein PCA & ADASYN Implementation
+  - file: "Coli Protein PCA & ADASYN Implementation"
     sections:
       - file: Klasifikasi Naive Bayes
       - file: Klasifikasi Random Forest
