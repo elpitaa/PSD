@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Implementasi ADASYN/SMOTE untuk Penyeimbangan Data &#8212; My sample book</title>
+    <title>Coli Protein PCA &amp; ADASYN Implementation &#8212; My sample book</title>
   
   
   
@@ -149,7 +149,7 @@
   
   
   
-     <img src="_static/logo.png"/>
+    <p class="title logo__title">My sample book</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -181,8 +181,11 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="Preprocessing%20Data.html">Preprocessing Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Tugas%20Power%20BI.html">Tugas Power BI</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Implementasi ADASYN/SMOTE untuk Penyeimbangan Data</a></li>
-
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Coli Protein PCA &amp; ADASYN Implementation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="Klasifikasi%20Naive%20Bayes.html">Klasifikasi Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Klasifikasi%20Random%20Forest.html">Klasifikasi Random Forest</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="Outlier%20Detection%20dan%20Unbalanced%20Dataset%20Analysis%20di%20KNIME.html">Outlier Detection dan Unbalanced Dataset Analysis di KNIME</a></li>
 
 
@@ -374,7 +377,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Implementasi ADASYN/SMOTE untuk Penyeimbangan Data</h1>
+    <h1>Coli Protein PCA & ADASYN Implementation</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -384,10 +387,9 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Implementasi ADASYN/SMOTE untuk Penyeimbangan Data</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-data-setelah-balancing-dengan-pca">Plotting Data Setelah Balancing dengan PCA</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementasi-adasyn-smote-untuk-penyeimbangan-data">Implementasi ADASYN/SMOTE untuk Penyeimbangan Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-data-setelah-balancing-dengan-pca">Plotting Data Setelah Balancing dengan PCA</a></li>
 </ul>
-
             </nav>
         </div>
     </div>
@@ -398,7 +400,9 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <div class="cell docutils container">
+  <section id="coli-protein-pca-adasyn-implementation">
+<h1>Coli Protein PCA &amp; ADASYN Implementation<a class="headerlink" href="#coli-protein-pca-adasyn-implementation" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ========================================</span>
 <span class="c1"># IMPORT LIBRARIES &amp; SETUP</span>
@@ -896,9 +900,8 @@ Preprocessing selesai!
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Implementasi PCA untuk reduksi dimensi dari 7D menjadi 2D...
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== HASIL PCA ===
+
+=== HASIL PCA ===
 Shape data setelah PCA: (336, 2)
 Explained variance ratio: [0.31508933 0.20874152]
 Total explained variance: 0.524
@@ -992,7 +995,7 @@ Visualisasi data asli selesai!
 </div>
 </div>
 <section id="implementasi-adasyn-smote-untuk-penyeimbangan-data">
-<h1>Implementasi ADASYN/SMOTE untuk Penyeimbangan Data<a class="headerlink" href="#implementasi-adasyn-smote-untuk-penyeimbangan-data" title="Link to this heading">#</a></h1>
+<h2>Implementasi ADASYN/SMOTE untuk Penyeimbangan Data<a class="headerlink" href="#implementasi-adasyn-smote-untuk-penyeimbangan-data" title="Link to this heading">#</a></h2>
 <p><strong>Tujuan:</strong> Mengatasi ketidakseimbangan kelas pada dataset E.coli<br />
 <strong>Metode:</strong> ADASYN (Adaptive Synthetic Sampling) atau SMOTE sebagai fallback<br />
 <strong>Target:</strong> Menyeimbangkan distribusi kelas untuk meningkatkan performa model</p>
@@ -1161,7 +1164,7 @@ Proses balancing data selesai!
 </div>
 </section>
 <section id="plotting-data-setelah-balancing-dengan-pca">
-<h1>Plotting Data Setelah Balancing dengan PCA<a class="headerlink" href="#plotting-data-setelah-balancing-dengan-pca" title="Link to this heading">#</a></h1>
+<h2>Plotting Data Setelah Balancing dengan PCA<a class="headerlink" href="#plotting-data-setelah-balancing-dengan-pca" title="Link to this heading">#</a></h2>
 <p><strong>Visualisasi:</strong> Scatter plot data hasil balancing dengan marking untuk membedakan:</p>
 <ul class="simple">
 <li><p><strong>Lingkaran</strong> = Data asli dari database</p></li>
@@ -1435,6 +1438,7 @@ Implementasi PCA &amp; ADASYN/SMOTE berhasil diselesaikan!
 </div>
 </div>
 </div>
+</section>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -1503,10 +1507,9 @@ Implementasi PCA &amp; ADASYN/SMOTE berhasil diselesaikan!
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Implementasi ADASYN/SMOTE untuk Penyeimbangan Data</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-data-setelah-balancing-dengan-pca">Plotting Data Setelah Balancing dengan PCA</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementasi-adasyn-smote-untuk-penyeimbangan-data">Implementasi ADASYN/SMOTE untuk Penyeimbangan Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-data-setelah-balancing-dengan-pca">Plotting Data Setelah Balancing dengan PCA</a></li>
 </ul>
-
   </nav></div>
 
 </div></div>
