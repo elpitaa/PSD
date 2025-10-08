@@ -4,14 +4,14 @@
 format: jb-book
 root: intro
 chapters:
-- file: Business Problem
-- file: Data Understanding
-  sections:
-    - file: Eksplorasi Data
-- file: Preprocessing Data
-- file: Tugas Power BI
-- file: Coli Protein PCA & ADASYN Implementation
-  sections:
-    - file: Klasifikasi Naive Bayes
-    - file: Klasifikasi Random Forest
-- file: Outlier Detection dan Unbalanced Dataset Analysis di KNIME
+  - file: Business Problem
+  - file: Data Understanding
+    sections:
+      - file: Eksplorasi Data
+  - file: Preprocessing Data
+  - file: Tugas Power BI
+  - file: Coli Protein PCA & ADASYN Implementation
+    sections:
+      - file: Klasifikasi Naive Bayes
+      - file: Klasifikasi Random Forest
+  - file: Outlier Detection dan Unbalanced Dataset Analysis di KNIME
