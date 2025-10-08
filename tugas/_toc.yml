@@ -11,6 +11,7 @@ chapters:
 - file: Preprocessing Data
 - file: Tugas Power BI
 - file: Coli Protein PCA & ADASYN Implementation
-- file: Klasifikasi Naive Bayes
-- file: Klasifikasi Random Forest
+  sections:
+    - file: Klasifikasi Naive Bayes
+    - file: Klasifikasi Random Forest
 - file: Outlier Detection dan Unbalanced Dataset Analysis di KNIME
