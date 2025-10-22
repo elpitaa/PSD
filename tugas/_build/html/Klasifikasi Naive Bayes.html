@@ -61,7 +61,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Klasifikasi Random Forest" href="Klasifikasi%20Random%20Forest.html" />
-    <link rel="prev" title="Implementasi ADASYN/SMOTE untuk Penyeimbangan Data" href="Coli%20Protein%20PCA%20%26%20ADASYN%20Implementation.html" />
+    <link rel="prev" title="Coli Protein PCA &amp; ADASYN Implementation" href="Coli%20Protein%20PCA%20%26%20ADASYN%20Implementation.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -149,7 +149,7 @@
   
   
   
-     <img src="_static/logo.png"/>
+    <p class="title logo__title">My sample book</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -181,10 +181,21 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="Preprocessing%20Data.html">Preprocessing Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Tugas%20Power%20BI.html">Tugas Power BI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Coli%20Protein%20PCA%20%26%20ADASYN%20Implementation.html">Implementasi ADASYN/SMOTE untuk Penyeimbangan Data</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="Coli%20Protein%20PCA%20%26%20ADASYN%20Implementation.html">Coli Protein PCA &amp; ADASYN Implementation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Klasifikasi Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Klasifikasi%20Random%20Forest.html">Klasifikasi Random Forest</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="Outlier%20Detection%20dan%20Unbalanced%20Dataset%20Analysis%20di%20KNIME.html">Outlier Detection dan Unbalanced Dataset Analysis di KNIME</a></li>
 
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Klasifikasi Naive Bayes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Klasifikasi%20Random%20Forest.html">Klasifikasi Random Forest</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Prediksi%20ambang%20batas%20NO2%20satu%20hari%20kedepan.html">Prediksi ambang batas NO2 satu hari kedepan</a></li>
+
+
+
 </ul>
 
     </div>
@@ -474,9 +485,7 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== MEMUAT DATASET E.COLI ===
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Data dari UCI berhasil dimuat
+Data dari UCI berhasil dimuat
 Dataset shape: (336, 9)
 Kelas: [&#39;cp&#39; &#39;im&#39; &#39;imS&#39; &#39;imL&#39; &#39;imU&#39; &#39;om&#39; &#39;omL&#39; &#39;pp&#39;]
 </pre></div>
@@ -815,22 +824,23 @@ weighted avg       0.87      0.82      0.81       344
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== BAGGING CLASSIFIER: DATA SMOTE ===
-</pre></div>
-</div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="n">line</span> <span class="mi">4</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># BAGGING CLASSIFIER - DATA SMOTE</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== BAGGING CLASSIFIER: DATA SMOTE ===&quot;</span><span class="p">)</span>
-<span class="ne">----&gt; </span><span class="mi">4</span> <span class="n">bagging_smote</span> <span class="o">=</span> <span class="n">BaggingClassifier</span><span class="p">(</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="n">estimator</span><span class="o">=</span><span class="n">GaussianNB</span><span class="p">(),</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span>     <span class="n">n_estimators</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span>     <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="n">bagging_smote</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_smote</span><span class="p">,</span> <span class="n">y_train_smote</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="n">y_pred_bagging_smote</span> <span class="o">=</span> <span class="n">bagging_smote</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_smote</span><span class="p">)</span>
+Accuracy Bagging (Data SMOTE): 0.7965
 
-<span class="ne">NameError</span>: name &#39;BaggingClassifier&#39; is not defined
+Classification Report Bagging (Data SMOTE):
+              precision    recall  f1-score   support
+
+          cp       0.88      0.98      0.92        43
+          im       0.54      0.88      0.67        43
+         imL       1.00      1.00      1.00        43
+         imS       0.98      1.00      0.99        43
+         imU       0.89      0.19      0.31        43
+          om       0.89      0.40      0.55        43
+         omL       1.00      1.00      1.00        43
+          pp       0.59      0.93      0.72        43
+
+    accuracy                           0.80       344
+   macro avg       0.85      0.80      0.77       344
+weighted avg       0.85      0.80      0.77       344
 </pre></div>
 </div>
 </div>
@@ -1756,7 +1766,7 @@ DATASET SUMMARY:
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Implementasi ADASYN/SMOTE untuk Penyeimbangan Data</p>
+        <p class="prev-next-title">Coli Protein PCA &amp; ADASYN Implementation</p>
       </div>
     </a>
     <a class="right-next"

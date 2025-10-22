@@ -149,7 +149,7 @@
   
   
   
-    <img src="_static/logo.png"/>
+    <p class="title logo__title">My sample book</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -181,6 +181,21 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="Preprocessing%20Data.html">Preprocessing Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Tugas%20Power%20BI.html">Tugas Power BI</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="Coli%20Protein%20PCA%20%26%20ADASYN%20Implementation.html">Coli Protein PCA &amp; ADASYN Implementation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="Klasifikasi%20Naive%20Bayes.html">Klasifikasi Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Klasifikasi%20Random%20Forest.html">Klasifikasi Random Forest</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="Outlier%20Detection%20dan%20Unbalanced%20Dataset%20Analysis%20di%20KNIME.html">Outlier Detection dan Unbalanced Dataset Analysis di KNIME</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Prediksi%20ambang%20batas%20NO2%20satu%20hari%20kedepan.html">Prediksi ambang batas NO2 satu hari kedepan</a></li>
+
+
+
 </ul>
 
     </div>
@@ -452,7 +467,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>✅ Dataset Iris berhasil dimuat dari sklearn
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>⚠️ sklearn gagal memuat dataset, pakai dataset dari seaborn
 Ukuran dataset: 150 baris, 6 kolom
 </pre></div>
 </div>
@@ -474,10 +489,10 @@ Ukuran dataset: 150 baris, 6 kolom
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>sepal length (cm)</th>
-      <th>sepal width (cm)</th>
-      <th>petal length (cm)</th>
-      <th>petal width (cm)</th>
+      <th>sepal_length</th>
+      <th>sepal_width</th>
+      <th>petal_length</th>
+      <th>petal_width</th>
       <th>species</th>
       <th>species_name</th>
     </tr>
@@ -489,7 +504,7 @@ Ukuran dataset: 150 baris, 6 kolom
       <td>3.5</td>
       <td>1.4</td>
       <td>0.2</td>
-      <td>0</td>
+      <td>setosa</td>
       <td>setosa</td>
     </tr>
     <tr>
@@ -498,7 +513,7 @@ Ukuran dataset: 150 baris, 6 kolom
       <td>3.0</td>
       <td>1.4</td>
       <td>0.2</td>
-      <td>0</td>
+      <td>setosa</td>
       <td>setosa</td>
     </tr>
     <tr>
@@ -507,7 +522,7 @@ Ukuran dataset: 150 baris, 6 kolom
       <td>3.2</td>
       <td>1.3</td>
       <td>0.2</td>
-      <td>0</td>
+      <td>setosa</td>
       <td>setosa</td>
     </tr>
     <tr>
@@ -516,7 +531,7 @@ Ukuran dataset: 150 baris, 6 kolom
       <td>3.1</td>
       <td>1.5</td>
       <td>0.2</td>
-      <td>0</td>
+      <td>setosa</td>
       <td>setosa</td>
     </tr>
     <tr>
@@ -525,7 +540,7 @@ Ukuran dataset: 150 baris, 6 kolom
       <td>3.6</td>
       <td>1.4</td>
       <td>0.2</td>
-      <td>0</td>
+      <td>setosa</td>
       <td>setosa</td>
     </tr>
   </tbody>
@@ -550,16 +565,16 @@ Ukuran dataset: 150 baris, 6 kolom
 &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
 RangeIndex: 150 entries, 0 to 149
 Data columns (total 6 columns):
- #   Column             Non-Null Count  Dtype   
----  ------             --------------  -----   
- 0   sepal length (cm)  150 non-null    float64 
- 1   sepal width (cm)   150 non-null    float64 
- 2   petal length (cm)  150 non-null    float64 
- 3   petal width (cm)   150 non-null    float64 
- 4   species            150 non-null    int64   
- 5   species_name       150 non-null    category
-dtypes: category(1), float64(4), int64(1)
-memory usage: 6.3 KB
+ #   Column        Non-Null Count  Dtype  
+---  ------        --------------  -----  
+ 0   sepal_length  150 non-null    float64
+ 1   sepal_width   150 non-null    float64
+ 2   petal_length  150 non-null    float64
+ 3   petal_width   150 non-null    float64
+ 4   species       150 non-null    object 
+ 5   species_name  150 non-null    object 
+dtypes: float64(4), object(2)
+memory usage: 7.2+ KB
 
 --- 5 Data Teratas ---
 </pre></div>
@@ -582,10 +597,10 @@ memory usage: 6.3 KB
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>sepal length (cm)</th>
-      <th>sepal width (cm)</th>
-      <th>petal length (cm)</th>
-      <th>petal width (cm)</th>
+      <th>sepal_length</th>
+      <th>sepal_width</th>
+      <th>petal_length</th>
+      <th>petal_width</th>
       <th>species</th>
       <th>species_name</th>
     </tr>
@@ -597,7 +612,7 @@ memory usage: 6.3 KB
       <td>3.5</td>
       <td>1.4</td>
       <td>0.2</td>
-      <td>0</td>
+      <td>setosa</td>
       <td>setosa</td>
     </tr>
     <tr>
@@ -606,7 +621,7 @@ memory usage: 6.3 KB
       <td>3.0</td>
       <td>1.4</td>
       <td>0.2</td>
-      <td>0</td>
+      <td>setosa</td>
       <td>setosa</td>
     </tr>
     <tr>
@@ -615,7 +630,7 @@ memory usage: 6.3 KB
       <td>3.2</td>
       <td>1.3</td>
       <td>0.2</td>
-      <td>0</td>
+      <td>setosa</td>
       <td>setosa</td>
     </tr>
     <tr>
@@ -624,7 +639,7 @@ memory usage: 6.3 KB
       <td>3.1</td>
       <td>1.5</td>
       <td>0.2</td>
-      <td>0</td>
+      <td>setosa</td>
       <td>setosa</td>
     </tr>
     <tr>
@@ -633,7 +648,7 @@ memory usage: 6.3 KB
       <td>3.6</td>
       <td>1.4</td>
       <td>0.2</td>
-      <td>0</td>
+      <td>setosa</td>
       <td>setosa</td>
     </tr>
   </tbody>
@@ -647,10 +662,11 @@ memory usage: 6.3 KB
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>setosa        50
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>species_name
+setosa        50
 versicolor    50
 virginica     50
-Name: species_name, dtype: int64
+Name: count, dtype: int64
 </pre></div>
 </div>
 </div>
@@ -671,21 +687,21 @@ Name: species_name, dtype: int64
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Tipe Data Kolom ---
-sepal length (cm)     float64
-sepal width (cm)      float64
-petal length (cm)     float64
-petal width (cm)      float64
-species                 int64
-species_name         category
+sepal_length    float64
+sepal_width     float64
+petal_length    float64
+petal_width     float64
+species          object
+species_name     object
 dtype: object
 
 --- Mengecek Missing Value ---
-sepal length (cm)    0
-sepal width (cm)     0
-petal length (cm)    0
-petal width (cm)     0
-species              0
-species_name         0
+sepal_length    0
+sepal_width     0
+petal_length    0
+petal_width     0
+species         0
+species_name    0
 dtype: int64
 </pre></div>
 </div>
@@ -729,17 +745,15 @@ dtype: int64
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>sepal length (cm)</th>
-      <th>sepal width (cm)</th>
-      <th>petal length (cm)</th>
-      <th>petal width (cm)</th>
-      <th>species</th>
+      <th>sepal_length</th>
+      <th>sepal_width</th>
+      <th>petal_length</th>
+      <th>petal_width</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>count</th>
-      <td>150.00</td>
       <td>150.00</td>
       <td>150.00</td>
       <td>150.00</td>
@@ -751,7 +765,6 @@ dtype: int64
       <td>3.06</td>
       <td>3.76</td>
       <td>1.20</td>
-      <td>1.00</td>
     </tr>
     <tr>
       <th>std</th>
@@ -759,7 +772,6 @@ dtype: int64
       <td>0.44</td>
       <td>1.77</td>
       <td>0.76</td>
-      <td>0.82</td>
     </tr>
     <tr>
       <th>min</th>
@@ -767,7 +779,6 @@ dtype: int64
       <td>2.00</td>
       <td>1.00</td>
       <td>0.10</td>
-      <td>0.00</td>
     </tr>
     <tr>
       <th>25%</th>
@@ -775,7 +786,6 @@ dtype: int64
       <td>2.80</td>
       <td>1.60</td>
       <td>0.30</td>
-      <td>0.00</td>
     </tr>
     <tr>
       <th>50%</th>
@@ -783,7 +793,6 @@ dtype: int64
       <td>3.00</td>
       <td>4.35</td>
       <td>1.30</td>
-      <td>1.00</td>
     </tr>
     <tr>
       <th>75%</th>
@@ -791,7 +800,6 @@ dtype: int64
       <td>3.30</td>
       <td>5.10</td>
       <td>1.80</td>
-      <td>2.00</td>
     </tr>
     <tr>
       <th>max</th>
@@ -799,11 +807,10 @@ dtype: int64
       <td>4.40</td>
       <td>6.90</td>
       <td>2.50</td>
-      <td>2.00</td>
     </tr>
   </tbody>
 </table>
-</div></div><img alt="_images/d8fb7339352a4a32f025301f65469724c22f1bb615410c9fe2d0d795831059b9.png" src="_images/d8fb7339352a4a32f025301f65469724c22f1bb615410c9fe2d0d795831059b9.png" />
+</div></div><img alt="_images/e17854a7fa5f1cb2d45c8ee25615ebdd94d1b5fd74477153f5af1aa2b008ac95.png" src="_images/e17854a7fa5f1cb2d45c8ee25615ebdd94d1b5fd74477153f5af1aa2b008ac95.png" />
 </div>
 </div>
 </section>
@@ -828,8 +835,8 @@ dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/7a910ecbc325f2031dc465a5b16f7fc22839dd4c4e8dd1af3c3e609fbdf5ee85.png" src="_images/7a910ecbc325f2031dc465a5b16f7fc22839dd4c4e8dd1af3c3e609fbdf5ee85.png" />
-<img alt="_images/5e21382d0ecc8ddc27563396937b9f102dd56dd7e46b00e447856a32594e5b4d.png" src="_images/5e21382d0ecc8ddc27563396937b9f102dd56dd7e46b00e447856a32594e5b4d.png" />
+<img alt="_images/5f178519b34539239875a526baf3d4d92f13396aa005b492597ab796a450825d.png" src="_images/5f178519b34539239875a526baf3d4d92f13396aa005b492597ab796a450825d.png" />
+<img alt="_images/77941ee8c836e0b757af072121f428fdbe864c26011de7242718e2775773f17e.png" src="_images/77941ee8c836e0b757af072121f428fdbe864c26011de7242718e2775773f17e.png" />
 </div>
 </div>
 </section>
@@ -852,22 +859,14 @@ dtype: int64
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Matriks Korelasi ---
-                   sepal length (cm)  sepal width (cm)  petal length (cm)  \
-sepal length (cm)           1.000000         -0.117570           0.871754   
-sepal width (cm)           -0.117570          1.000000          -0.428440   
-petal length (cm)           0.871754         -0.428440           1.000000   
-petal width (cm)            0.817941         -0.366126           0.962865   
-species                     0.782561         -0.426658           0.949035   
-
-                   petal width (cm)   species  
-sepal length (cm)          0.817941  0.782561  
-sepal width (cm)          -0.366126 -0.426658  
-petal length (cm)          0.962865  0.949035  
-petal width (cm)           1.000000  0.956547  
-species                    0.956547  1.000000  
+              sepal_length  sepal_width  petal_length  petal_width
+sepal_length      1.000000    -0.117570      0.871754     0.817941
+sepal_width      -0.117570     1.000000     -0.428440    -0.366126
+petal_length      0.871754    -0.428440      1.000000     0.962865
+petal_width       0.817941    -0.366126      0.962865     1.000000
 </pre></div>
 </div>
-<img alt="_images/f339739ae9720a0913bb28c0cf90031c1f990b70ebdb6d12c348ff75eb8b006a.png" src="_images/f339739ae9720a0913bb28c0cf90031c1f990b70ebdb6d12c348ff75eb8b006a.png" />
+<img alt="_images/47c1a8753d7f4ee1bd5d9c7abe438fb06796050791d82724270616defb2cef4a.png" src="_images/47c1a8753d7f4ee1bd5d9c7abe438fb06796050791d82724270616defb2cef4a.png" />
 </div>
 </div>
 </section>
@@ -910,7 +909,7 @@ species                    0.956547  1.000000
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/2a21341dda65e0ee239c2a712c07b24c45b9f95aa17f489cd5013d3f295427ef.png" src="_images/2a21341dda65e0ee239c2a712c07b24c45b9f95aa17f489cd5013d3f295427ef.png" />
+<img alt="_images/ddf92137f8f93dc667c7390a508c6ffefdd6a662c21a9b34e924a26ee60a3b85.png" src="_images/ddf92137f8f93dc667c7390a508c6ffefdd6a662c21a9b34e924a26ee60a3b85.png" />
 </div>
 </div>
 </section>
@@ -939,19 +938,17 @@ species                    0.956547  1.000000
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Jumlah Outlier per Kolom ---
-sepal length (cm)    0
-sepal width (cm)     4
-petal length (cm)    0
-petal width (cm)     0
-species              0
+sepal_length    0
+sepal_width     4
+petal_length    0
+petal_width     0
 dtype: int64
 
 --- Persentase Outlier per Kolom ---
-sepal length (cm)     0.0 %
-sepal width (cm)     2.67 %
-petal length (cm)     0.0 %
-petal width (cm)      0.0 %
-species               0.0 %
+sepal_length     0.0 %
+sepal_width     2.67 %
+petal_length     0.0 %
+petal_width      0.0 %
 dtype: object
 </pre></div>
 </div>
@@ -976,23 +973,20 @@ dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Outlier pada sepal length (cm):
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Outlier pada sepal_length:
 Tidak ada outlier
 
-Outlier pada sepal width (cm):
-    sepal width (cm)  species
-15               4.4        0
-32               4.1        0
-33               4.2        0
-60               2.0        1
+Outlier pada sepal_width:
+    sepal_width     species
+15          4.4      setosa
+32          4.1      setosa
+33          4.2      setosa
+60          2.0  versicolor
 
-Outlier pada petal length (cm):
+Outlier pada petal_length:
 Tidak ada outlier
 
-Outlier pada petal width (cm):
-Tidak ada outlier
-
-Outlier pada species:
+Outlier pada petal_width:
 Tidak ada outlier
 </pre></div>
 </div>
@@ -1147,64 +1141,43 @@ Tidak ada outlier
 Jumlah outlier: 15
 
 === Deteksi Outlier dengan Isolation Forest ===
-Jumlah outlier: 15
-
-=== Deteksi Outlier dengan Robust Covariance ===
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah outlier: 15
+
+=== Deteksi Outlier dengan Robust Covariance ===
+Jumlah outlier: 15
 </pre></div>
 </div>
-<img alt="_images/aa75fbfeff5435e176d8a01ae2d9fb9863cebc6777dfc078e25dbebefc76ef14.png" src="_images/aa75fbfeff5435e176d8a01ae2d9fb9863cebc6777dfc078e25dbebefc76ef14.png" />
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
-<span class="nn">File /usr/local/python/3.12.1/lib/python3.12/site-packages/pandas/core/indexes/base.py:3802,</span> in <span class="ni">Index.get_loc</span><span class="nt">(self, key, method, tolerance)</span>
-<span class="g g-Whitespace">   </span><span class="mi">3801</span> <span class="k">try</span><span class="p">:</span>
-<span class="ne">-&gt; </span><span class="mi">3802</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">casted_key</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">3803</span> <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+<img alt="_images/2681479c25766f3476dba4d07a56e4b2e32a935d8fa2bd9386cc570a106fcfb9.png" src="_images/2681479c25766f3476dba4d07a56e4b2e32a935d8fa2bd9386cc570a106fcfb9.png" />
+<img alt="_images/173124c87df12170a9c6de72e53aa2d6794999f19a04bcf487195f2c7fbb69f4.png" src="_images/173124c87df12170a9c6de72e53aa2d6794999f19a04bcf487195f2c7fbb69f4.png" />
+<img alt="_images/b10a92fe5e5ef6ede3afbd99db6b6e3e678812ec61bcf97d927afc3e04849bd3.png" src="_images/b10a92fe5e5ef6ede3afbd99db6b6e3e678812ec61bcf97d927afc3e04849bd3.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== Perbandingan Hasil Deteksi Outlier ===
 
-<span class="nn">File /usr/local/python/3.12.1/lib/python3.12/site-packages/pandas/_libs/index.pyx:138,</span> in <span class="ni">pandas._libs.index.IndexEngine.get_loc</span><span class="nt">()</span>
+Jumlah outlier yang terdeteksi oleh masing-masing model:
+LOF                  15
+Isolation Forest     15
+Robust Covariance    15
+dtype: int64
 
-<span class="nn">File /usr/local/python/3.12.1/lib/python3.12/site-packages/pandas/_libs/index.pyx:165,</span> in <span class="ni">pandas._libs.index.IndexEngine.get_loc</span><span class="nt">()</span>
+Jumlah data yang terdeteksi sebagai outlier oleh semua model:
+3
 
-<span class="nn">File pandas/_libs/hashtable_class_helper.pxi:5745,</span> in <span class="ni">pandas._libs.hashtable.PyObjectHashTable.get_item</span><span class="nt">()</span>
+Jumlah data yang terdeteksi sebagai outlier oleh minimal 2 model:
+12
 
-<span class="nn">File pandas/_libs/hashtable_class_helper.pxi:5753,</span> in <span class="ni">pandas._libs.hashtable.PyObjectHashTable.get_item</span><span class="nt">()</span>
+Data points detected as outliers by all methods:
+     sepal_length  sepal_width  petal_length  petal_width    species  \
+41            4.5          2.3           1.3          0.3     setosa   
+117           7.7          3.8           6.7          2.2  virginica   
+131           7.9          3.8           6.4          2.0  virginica   
 
-<span class="ne">KeyError</span>: &#39;sepal_length&#39;
-
-<span class="n">The</span> <span class="n">above</span> <span class="n">exception</span> <span class="n">was</span> <span class="n">the</span> <span class="n">direct</span> <span class="n">cause</span> <span class="n">of</span> <span class="n">the</span> <span class="n">following</span> <span class="n">exception</span><span class="p">:</span>
-
-<span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">12</span><span class="p">],</span> <span class="n">line</span> <span class="mi">64</span>
-<span class="g g-Whitespace">     </span><span class="mi">62</span> <span class="c1"># Plot untuk sepal features (using LOF results)</span>
-<span class="g g-Whitespace">     </span><span class="mi">63</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">131</span><span class="p">)</span>
-<span class="ne">---&gt; </span><span class="mi">64</span> <span class="n">sc</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;sepal_length&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;sepal_width&#39;</span><span class="p">],</span> 
-<span class="g g-Whitespace">     </span><span class="mi">65</span>            <span class="n">c</span><span class="o">=</span><span class="n">lof_labels</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
-<span class="nn">     66 plt.title(&#39;Outliers</span> in <span class="ni">Sepal Features </span><span class="nt">(LOF)&#39;)</span>
-<span class="g g-Whitespace">     </span><span class="mi">67</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Sepal Length&#39;</span><span class="p">)</span>
-
-<span class="nn">File /usr/local/python/3.12.1/lib/python3.12/site-packages/pandas/core/frame.py:3807,</span> in <span class="ni">DataFrame.__getitem__</span><span class="nt">(self, key)</span>
-<span class="g g-Whitespace">   </span><span class="mi">3805</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">nlevels</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">3806</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getitem_multilevel</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-<span class="ne">-&gt; </span><span class="mi">3807</span> <span class="n">indexer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">3808</span> <span class="k">if</span> <span class="n">is_integer</span><span class="p">(</span><span class="n">indexer</span><span class="p">):</span>
-<span class="g g-Whitespace">   </span><span class="mi">3809</span>     <span class="n">indexer</span> <span class="o">=</span> <span class="p">[</span><span class="n">indexer</span><span class="p">]</span>
-
-<span class="nn">File /usr/local/python/3.12.1/lib/python3.12/site-packages/pandas/core/indexes/base.py:3804,</span> in <span class="ni">Index.get_loc</span><span class="nt">(self, key, method, tolerance)</span>
-<span class="g g-Whitespace">   </span><span class="mi">3802</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">casted_key</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">3803</span> <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
-<span class="ne">-&gt; </span><span class="mi">3804</span>     <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">err</span>
-<span class="g g-Whitespace">   </span><span class="mi">3805</span> <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">3806</span>     <span class="c1"># If we have a listlike key, _check_indexing_error will raise</span>
-<span class="g g-Whitespace">   </span><span class="mi">3807</span>     <span class="c1">#  InvalidIndexError. Otherwise we fall through and re-raise</span>
-<span class="g g-Whitespace">   </span><span class="mi">3808</span>     <span class="c1">#  the TypeError.</span>
-<span class="g g-Whitespace">   </span><span class="mi">3809</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_check_indexing_error</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-
-<span class="ne">KeyError</span>: &#39;sepal_length&#39;
+    species_name  
+41        setosa  
+117    virginica  
+131    virginica  
 </pre></div>
 </div>
-<img alt="_images/1537a71ec0a04262b83db11144a0034fcb77254824f0dab99681d80be322d77e.png" src="_images/1537a71ec0a04262b83db11144a0034fcb77254824f0dab99681d80be322d77e.png" />
 </div>
 </div>
 </section>
