@@ -1,0 +1,625 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Outlier Detection dan Unbalanced Dataset Analysis di KNIME &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tugas/_build/jupyter_execute/Outlier Detection dan Unbalanced Dataset Analysis di KNIME';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">My sample book</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    Welcome to your Jupyter Book
+                </a>
+            </li>
+        </ul>
+        
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Ftugas/_build/jupyter_execute/Outlier Detection dan Unbalanced Dataset Analysis di KNIME.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/tugas/_build/jupyter_execute/Outlier Detection dan Unbalanced Dataset Analysis di KNIME.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Outlier Detection dan Unbalanced Dataset Analysis di KNIME</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Outlier Detection dan Unbalanced Dataset Analysis di KNIME</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tugas-outlier-detection-missing-values-unbalanced-dataset-analysis-dengan-knime">Tugas Outlier Detection, Missing Values, Unbalanced Dataset Analysis Dengan KNIME</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#tujuan">Tujuan</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#diagram-workflow-knime">Diagram Workflow KNIME</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-langkah-analisis">Langkah-langkah Analisis</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#postgresql-connector">1. PostgreSQL Connector</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#db-table-selector-dan-db-reader">2. DB Table Selector dan DB Reader</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#missing-value">3. Missing Value</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numeric-outliers">4. Numeric Outliers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#smote-synthetic-minority-oversampling-technique">5. SMOTE (Synthetic Minority Oversampling Technique)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scatter-plot">6. Scatter Plot</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-analisis">Hasil Analisis</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#alamat-share-workflow-knime">Alamat Share Workflow KNIME</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="outlier-detection-dan-unbalanced-dataset-analysis-di-knime">
+<h1>Outlier Detection dan Unbalanced Dataset Analysis di KNIME<a class="headerlink" href="#outlier-detection-dan-unbalanced-dataset-analysis-di-knime" title="Link to this heading">#</a></h1>
+<section id="tugas-outlier-detection-missing-values-unbalanced-dataset-analysis-dengan-knime">
+<h2>Tugas Outlier Detection, Missing Values, Unbalanced Dataset Analysis Dengan KNIME<a class="headerlink" href="#tugas-outlier-detection-missing-values-unbalanced-dataset-analysis-dengan-knime" title="Link to this heading">#</a></h2>
+</section>
+</section>
+<section id="tujuan">
+<h1>Tujuan<a class="headerlink" href="#tujuan" title="Link to this heading">#</a></h1>
+<p>Proyek ini bertujuan untuk:</p>
+<ol class="arabic simple">
+<li><p>Melakukan pembersihan data (data preprocessing).</p></li>
+<li><p>Mendeteksi dan menangani outlier pada dataset.</p></li>
+<li><p>Mengatasi ketidakseimbangan kelas menggunakan metode SMOTE (Synthetic Minority Oversampling Technique).</p></li>
+<li><p>Melakukan visualisasi hasil dengan Scatter Plot untuk melihat distribusi data setelah balancing.</p></li>
+</ol>
+</section>
+<section id="diagram-workflow-knime">
+<h1>Diagram Workflow KNIME<a class="headerlink" href="#diagram-workflow-knime" title="Link to this heading">#</a></h1>
+<p>Berikut diagram workflow yang digunakan pada proyek ini.</p>
+<p><img alt="Alur" src="tugas/_build/jupyter_execute/gambar/alur_workflow.png" /></p>
+</section>
+<section id="langkah-langkah-analisis">
+<h1>Langkah-langkah Analisis<a class="headerlink" href="#langkah-langkah-analisis" title="Link to this heading">#</a></h1>
+<section id="postgresql-connector">
+<h2>1. PostgreSQL Connector<a class="headerlink" href="#postgresql-connector" title="Link to this heading">#</a></h2>
+<p>Node ini digunakan untuk menghubungkan KNIME dengan database PostgreSQL. Setelah koneksi berhasil, node berikutnya dapat mengakses tabel di database secara langsung.</p>
+</section>
+<section id="db-table-selector-dan-db-reader">
+<h2>2. DB Table Selector dan DB Reader<a class="headerlink" href="#db-table-selector-dan-db-reader" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>DB Table Selector</strong> digunakan untuk memilih tabel dari database.</p></li>
+<li><p><strong>DB Reader</strong> membaca isi tabel menjadi data table di KNIME.</p></li>
+</ul>
+<p>Dataset berisi kolom:
+<code class="docutils literal notranslate"><span class="pre">protein_name</span></code>, <code class="docutils literal notranslate"><span class="pre">mcg</span></code>, <code class="docutils literal notranslate"><span class="pre">gvh</span></code>, <code class="docutils literal notranslate"><span class="pre">lip</span></code>, <code class="docutils literal notranslate"><span class="pre">chg</span></code>, <code class="docutils literal notranslate"><span class="pre">aac</span></code>, <code class="docutils literal notranslate"><span class="pre">alm1</span></code>, <code class="docutils literal notranslate"><span class="pre">alm2</span></code>, <code class="docutils literal notranslate"><span class="pre">localization_class</span></code></p>
+</section>
+<section id="missing-value">
+<h2>3. Missing Value<a class="headerlink" href="#missing-value" title="Link to this heading">#</a></h2>
+<p>Node Missing Value digunakan untuk menangani nilai kosong.</p>
+<ul class="simple">
+<li><p>Kolom numerik diisi dengan nilai rata-rata (<em>mean</em>).</p></li>
+<li><p>Kolom kategorikal diisi dengan nilai yang paling sering muncul (<em>mode</em>).</p></li>
+</ul>
+<p>Output: dataset tanpa nilai kosong.</p>
+</section>
+<section id="numeric-outliers">
+<h2>4. Numeric Outliers<a class="headerlink" href="#numeric-outliers" title="Link to this heading">#</a></h2>
+<p>Node Numeric Outliers mendeteksi nilai-nilai ekstrem berdasarkan metode statistik seperti Z-score.<br />
+Baris dengan nilai jauh dari distribusi normal dianggap sebagai outlier.</p>
+<p>Output: dataset dengan label apakah baris tersebut termasuk outlier.</p>
+</section>
+<section id="smote-synthetic-minority-oversampling-technique">
+<h2>5. SMOTE (Synthetic Minority Oversampling Technique)<a class="headerlink" href="#smote-synthetic-minority-oversampling-technique" title="Link to this heading">#</a></h2>
+<p>Metode ini digunakan untuk menyeimbangkan distribusi data yang tidak seimbang antar kelas.</p>
+<p>Pengaturan:</p>
+<ul class="simple">
+<li><p>Class column: <code class="docutils literal notranslate"><span class="pre">localization_class</span></code></p></li>
+<li><p>Nearest neighbors: 5</p></li>
+<li><p>Oversample minority classes: aktif</p></li>
+</ul>
+<p>Output: dataset dengan distribusi kelas yang seimbang.</p>
+</section>
+<section id="scatter-plot">
+<h2>6. Scatter Plot<a class="headerlink" href="#scatter-plot" title="Link to this heading">#</a></h2>
+<p>Node Scatter Plot digunakan untuk melihat hubungan antara dua fitur numerik, misalnya:</p>
+<ul class="simple">
+<li><p>Horizontal (X): <code class="docutils literal notranslate"><span class="pre">mcg</span></code></p></li>
+<li><p>Vertical (Y): <code class="docutils literal notranslate"><span class="pre">gvh</span></code></p></li>
+</ul>
+<p>Visualisasi membantu memeriksa persebaran data setelah SMOTE.</p>
+<p><img alt="Scatter Plot" src="tugas/_build/jupyter_execute/gambar/Scatter_Plot.png" /></p>
+</section>
+</section>
+<section id="hasil-analisis">
+<h1>Hasil Analisis<a class="headerlink" href="#hasil-analisis" title="Link to this heading">#</a></h1>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Tahapan</p></th>
+<th class="head"><p>Hasil</p></th>
+<th class="head"><p>Keterangan</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Missing Value</p></td>
+<td><p>Nilai kosong berhasil ditangani</p></td>
+<td><p>Semua kolom diisi dengan metode statistik</p></td>
+</tr>
+<tr class="row-odd"><td><p>Numeric Outliers</p></td>
+<td><p>Outlier terdeteksi pada beberapa data</p></td>
+<td><p>Bisa dianalisis lebih lanjut</p></td>
+</tr>
+<tr class="row-even"><td><p>SMOTE</p></td>
+<td><p>Dataset seimbang antar kelas</p></td>
+<td><p>Kelas minoritas berhasil ditambah</p></td>
+</tr>
+<tr class="row-odd"><td><p>Scatter Plot</p></td>
+<td><p>Distribusi data terlihat merata</p></td>
+<td><p>Pola antar fitur menjadi lebih seimbang</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="alamat-share-workflow-knime">
+<h1>Alamat Share Workflow KNIME<a class="headerlink" href="#alamat-share-workflow-knime" title="Link to this heading">#</a></h1>
+<p><a class="reference external" href="https://hub.knime.com/s/7sNOhis4RrSqaTL5">https://hub.knime.com/s/7sNOhis4RrSqaTL5</a></p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./tugas/_build/jupyter_execute"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Outlier Detection dan Unbalanced Dataset Analysis di KNIME</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tugas-outlier-detection-missing-values-unbalanced-dataset-analysis-dengan-knime">Tugas Outlier Detection, Missing Values, Unbalanced Dataset Analysis Dengan KNIME</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#tujuan">Tujuan</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#diagram-workflow-knime">Diagram Workflow KNIME</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-langkah-analisis">Langkah-langkah Analisis</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#postgresql-connector">1. PostgreSQL Connector</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#db-table-selector-dan-db-reader">2. DB Table Selector dan DB Reader</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#missing-value">3. Missing Value</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numeric-outliers">4. Numeric Outliers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#smote-synthetic-minority-oversampling-technique">5. SMOTE (Synthetic Minority Oversampling Technique)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scatter-plot">6. Scatter Plot</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-analisis">Hasil Analisis</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#alamat-share-workflow-knime">Alamat Share Workflow KNIME</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
