@@ -2,12 +2,13 @@ import streamlit as st
 from joblib import load
 import numpy as np
 import pandas as pd
+import os
 
 # ===============================
 # Load Model & Scaler
 # ===============================
 # model and scaler were saved with joblib (sklearn). Use joblib.load to read them.
-# Muat model dan scaler yang disimpan dengan joblib
+base_path = os.path.dirname(__file__)
 model = load("knn_model.pkl")
 scaler = load("minmax_scaler.pkl")
 
@@ -113,3 +114,4 @@ if st.button("Prediksi NO₂"):
 # ===============================
 st.markdown("---")
 st.caption("Dibuat menggunakan Streamlit | Model: KNN Regression")
+
