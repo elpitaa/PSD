@@ -17,4 +17,4 @@ chapters:
       - file: Klasifikasi Random Forest
   - file: Outlier Detection dan Unbalanced Dataset Analysis di KNIME
   - file: Prediksi Nilai NO2 Satu Hari Kedepan dengan KNN Regression
-  - file: Identifikasi Suara Buka Tutup Menggunakan Feature Statistik Time Series 
+  - file: Identifikasi Suara Buka Tutup Menggunakan Feature Statistik Time Series
