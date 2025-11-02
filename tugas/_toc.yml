@@ -3,6 +3,7 @@
 
 format: jb-book
 root: intro
+
 chapters:
   - file: Business Problem
   - file: Data Understanding
