@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Identifikasi Suara Buka Tutup Menggunakan Feature Statistik Time Series &#8212; My Jupyter Book</title>
+    <title>Identifikasi Suara Buka Tutup Menggunakan Feature Statistik Time Series &#8212; My sample book</title>
   
   
   
@@ -149,7 +149,7 @@
   
   
   
-    <p class="title logo__title">My Jupyter Book</p>
+    <p class="title logo__title">My sample book</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -213,6 +213,53 @@
         <div class="header-article-item">
 
 <div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Ftugas/_build/jupyter_execute/Identifikasi_Suara_Buka_Tutup.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
 
 
 
@@ -483,16 +530,6 @@ Pastikan file audio Anda sudah diorganisir dalam struktur folder:</p>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>📁 Mengecek folder: audio_data
-============================================================
-❌ Folder &#39;audio_data&#39; tidak ditemukan!
-
-💡 Buat folder dengan struktur:
-   audio_data/buka/  dan  audio_data/tutup/
-</pre></div>
-</div>
-</div>
 </div>
 <section id="visualisasi-sample-audio">
 <h3>Visualisasi Sample Audio<a class="headerlink" href="#visualisasi-sample-audio" title="Link to this heading">#</a></h3>
@@ -555,7 +592,10 @@ Pastikan file audio Anda sudah diorganisir dalam struktur folder:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>⚠️ File audio tidak ditemukan. Pastikan folder sudah berisi file audio.
+<img alt="../../../_images/ff96bd57390bad24eef563723945ea28c5dd8929c44e92a29bc597dcfaa8af6f.png" src="../../../_images/ff96bd57390bad24eef563723945ea28c5dd8929c44e92a29bc597dcfaa8af6f.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>📊 Info Audio:
+🔵 BUKA  - Durasi: 0.93s, File: buka_029.wav
+🔴 TUTUP - Durasi: 1.82s, File: tutup_030.wav
 </pre></div>
 </div>
 </div>
@@ -905,44 +945,52 @@ Total feature: 55 feature (19 time series + 36 spektral)
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>🚀 Memulai ekstraksi feature...
 ======================================================================
-Warning: Folder audio_data/buka tidak ditemukan
-Warning: Folder audio_data/tutup tidak ditemukan
-
-Dataset berhasil dibuat!
-Total samples: 0
-Distribusi label:
+Memproses 30 file dari kategori &#39;buka&#39;...
+  Progress: 10/30 file
+  Progress: 10/30 file
 </pre></div>
 </div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">line</span> <span class="mi">5</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🚀 Memulai ekstraksi feature...&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
-<span class="ne">----&gt; </span><span class="mi">5</span> <span class="n">df</span> <span class="o">=</span> <span class="n">create_dataset</span><span class="p">(</span><span class="n">audio_folder</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="mi">22050</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="c1"># Simpan dataset</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;audio_features.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Progress: 20/30 file
+  Progress: 30/30 file
+Memproses 30 file dari kategori &#39;tutup&#39;...
+  Progress: 30/30 file
+Memproses 30 file dari kategori &#39;tutup&#39;...
+  Progress: 10/30 file
+  Progress: 10/30 file
+  Progress: 20/30 file
+  Progress: 20/30 file
+  Progress: 30/30 file
 
-<span class="nn">Cell In[9], line 74,</span> in <span class="ni">create_dataset</span><span class="nt">(data_path, sr)</span>
-<span class="g g-Whitespace">     </span><span class="mi">72</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total samples: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">73</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Distribusi label:&quot;</span><span class="p">)</span>
-<span class="ne">---&gt; </span><span class="mi">74</span> <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
-<span class="g g-Whitespace">     </span><span class="mi">76</span> <span class="k">return</span> <span class="n">df</span>
+Dataset berhasil dibuat!
+Total samples: 60
+Distribusi label:
+label
+buka     30
+tutup    30
+Name: count, dtype: int64
 
-<span class="nn">File ~/.local/lib/python3.12/site-packages/pandas/core/frame.py:4113,</span> in <span class="ni">DataFrame.__getitem__</span><span class="nt">(self, key)</span>
-<span class="g g-Whitespace">   </span><span class="mi">4111</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">nlevels</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">4112</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getitem_multilevel</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-<span class="ne">-&gt; </span><span class="mi">4113</span> <span class="n">indexer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">4114</span> <span class="k">if</span> <span class="n">is_integer</span><span class="p">(</span><span class="n">indexer</span><span class="p">):</span>
-<span class="g g-Whitespace">   </span><span class="mi">4115</span>     <span class="n">indexer</span> <span class="o">=</span> <span class="p">[</span><span class="n">indexer</span><span class="p">]</span>
+✅ Dataset disimpan sebagai &#39;audio_features.csv&#39;
 
-<span class="nn">File ~/.local/lib/python3.12/site-packages/pandas/core/indexes/range.py:417,</span> in <span class="ni">RangeIndex.get_loc</span><span class="nt">(self, key)</span>
-<span class="g g-Whitespace">    </span><span class="mi">415</span>         <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">err</span>
-<span class="g g-Whitespace">    </span><span class="mi">416</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">Hashable</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">417</span>     <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">418</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_indexing_error</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">419</span> <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+📊 Ringkasan Dataset:
+   Total samples: 60
+   Total features: 53
+   Distribusi label: {&#39;buka&#39;: 30, &#39;tutup&#39;: 30}
+  Progress: 30/30 file
 
-<span class="ne">KeyError</span>: &#39;label&#39;
+Dataset berhasil dibuat!
+Total samples: 60
+Distribusi label:
+label
+buka     30
+tutup    30
+Name: count, dtype: int64
+
+✅ Dataset disimpan sebagai &#39;audio_features.csv&#39;
+
+📊 Ringkasan Dataset:
+   Total samples: 60
+   Total features: 53
+   Distribusi label: {&#39;buka&#39;: 30, &#39;tutup&#39;: 30}
 </pre></div>
 </div>
 </div>
@@ -2378,7 +2426,7 @@ max     0.0015   0.5297   1.0000  -0.9362   0.0047
   <div class="footer-item">
     
 <p class="component-author">
-By The Jupyter Book community
+By The Jupyter Book Community
 </p>
 
   </div>

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Identifikasi Suara Buka Tutup Menggunakan Feature Statistik Time Series &#8212; My Jupyter Book</title>
+    <title>Identifikasi Suara Buka Tutup Menggunakan Feature Statistik Time Series &#8212; My sample book</title>
   
   
   
@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -149,7 +149,7 @@
   
   
   
-    <p class="title logo__title">My Jupyter Book</p>
+    <p class="title logo__title">My sample book</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -213,6 +213,53 @@
         <div class="header-article-item">
 
 <div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Ftugas/Identifikasi Suara Buka Tutup Menggunakan Feature Statistik Time Series.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
 
 
 
@@ -931,61 +978,136 @@ Dataset Anda memiliki struktur:</p>
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      Progress: 10/150 file
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      Progress: 20/150 file
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      Progress: 30/150 file
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      Progress: 40/150 file
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      Progress: 50/150 file
-</pre></div>
-</div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">8</span><span class="p">],</span> <span class="n">line</span> <span class="mi">8</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="c1"># Definisi path folder audio (sesuai dengan struktur folder yang sudah dicek)</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">audio_folder</span> <span class="o">=</span> <span class="s1">&#39;audio_data/buka tutup/dataset48k&#39;</span>
-<span class="ne">----&gt; </span><span class="mi">8</span> <span class="n">df</span> <span class="o">=</span> <span class="n">create_dataset</span><span class="p">(</span><span class="n">audio_folder</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="mi">22050</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="c1"># Simpan dataset</span>
-<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;audio_features.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+      Progress: 20/150 file
+      Progress: 20/150 file
+      Progress: 30/150 file
+      Progress: 30/150 file
+      Progress: 40/150 file
+      Progress: 40/150 file
+      Progress: 50/150 file
+      Progress: 50/150 file
+      Progress: 60/150 file
+      Progress: 60/150 file
+      Progress: 70/150 file
+      Progress: 70/150 file
+      Progress: 80/150 file
+      Progress: 80/150 file
+      Progress: 90/150 file
+      Progress: 90/150 file
+      Progress: 100/150 file
+      Progress: 100/150 file
+      Progress: 110/150 file
+      Progress: 110/150 file
+      Progress: 120/150 file
+      Progress: 120/150 file
+      Progress: 130/150 file
+      Progress: 130/150 file
+      Progress: 140/150 file
+      Progress: 140/150 file
+      Progress: 150/150 file
+   Memproses 150 file dari kategori &#39;tutup&#39;...
+      Progress: 150/150 file
+   Memproses 150 file dari kategori &#39;tutup&#39;...
+      Progress: 10/150 file
+      Progress: 10/150 file
+      Progress: 20/150 file
+      Progress: 20/150 file
+      Progress: 30/150 file
+      Progress: 30/150 file
+      Progress: 40/150 file
+      Progress: 40/150 file
+      Progress: 50/150 file
+      Progress: 50/150 file
+      Progress: 60/150 file
+      Progress: 60/150 file
+      Progress: 70/150 file
+      Progress: 70/150 file
+      Progress: 80/150 file
+      Progress: 80/150 file
+      Progress: 90/150 file
+      Progress: 90/150 file
+      Progress: 100/150 file
+      Progress: 100/150 file
+      Progress: 110/150 file
+      Progress: 110/150 file
+      Progress: 120/150 file
+      Progress: 120/150 file
+      Progress: 130/150 file
+      Progress: 130/150 file
+      Progress: 140/150 file
+      Progress: 140/150 file
+      Progress: 150/150 file
 
-<span class="nn">Cell In[7], line 78,</span> in <span class="ni">create_dataset</span><span class="nt">(data_path, sr)</span>
-<span class="g g-Whitespace">     </span><span class="mi">75</span> <span class="n">audio</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">load_audio</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sr</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">77</span> <span class="c1"># Ekstrak feature</span>
-<span class="ne">---&gt; </span><span class="mi">78</span> <span class="n">features</span> <span class="o">=</span> <span class="n">extract_all_features</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="n">sr</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">79</span> <span class="n">features</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">category</span>
-<span class="g g-Whitespace">     </span><span class="mi">80</span> <span class="n">features</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+📁 Processing VAL folder...
+   Memproses 50 file dari kategori &#39;buka&#39;...
+      Progress: 150/150 file
 
-<span class="nn">Cell In[6], line 8,</span> in <span class="ni">extract_all_features</span><span class="nt">(audio, sr)</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">features</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="c1"># Feature time series</span>
-<span class="ne">----&gt; </span><span class="mi">8</span> <span class="n">time_features</span> <span class="o">=</span> <span class="n">extract_time_series_features</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="n">sr</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="n">features</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">time_features</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="c1"># Feature spektral</span>
+📁 Processing VAL folder...
+   Memproses 50 file dari kategori &#39;buka&#39;...
+      Progress: 10/50 file
+      Progress: 10/50 file
+      Progress: 20/50 file
+      Progress: 20/50 file
+      Progress: 30/50 file
+      Progress: 30/50 file
+      Progress: 40/50 file
+      Progress: 40/50 file
+      Progress: 50/50 file
+   Memproses 50 file dari kategori &#39;tutup&#39;...
+      Progress: 50/50 file
+   Memproses 50 file dari kategori &#39;tutup&#39;...
+      Progress: 10/50 file
+      Progress: 10/50 file
+      Progress: 20/50 file
+      Progress: 20/50 file
+      Progress: 30/50 file
+      Progress: 30/50 file
+      Progress: 40/50 file
+      Progress: 40/50 file
+      Progress: 50/50 file
 
-<span class="nn">Cell In[4], line 55,</span> in <span class="ni">extract_time_series_features</span><span class="nt">(audio, sr)</span>
-<span class="g g-Whitespace">     </span><span class="mi">52</span> <span class="n">features</span><span class="p">[</span><span class="s1">&#39;percentile_75&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="mi">75</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">54</span> <span class="c1"># 9. Autocorrelation</span>
-<span class="ne">---&gt; </span><span class="mi">55</span> <span class="n">autocorr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="n">audio</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;full&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">56</span> <span class="n">autocorr</span> <span class="o">=</span> <span class="n">autocorr</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">autocorr</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span><span class="p">:]</span>
-<span class="g g-Whitespace">     </span><span class="mi">57</span> <span class="n">features</span><span class="p">[</span><span class="s1">&#39;autocorr_max&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">autocorr</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">100</span><span class="p">])</span> <span class="o">/</span> <span class="n">autocorr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+✅ Dataset berhasil dibuat!
+   Total samples: 400
+   Distribusi label:
+label
+buka     200
+tutup    200
+Name: count, dtype: int64
 
-<span class="nn">File /usr/local/python/3.12.1/lib/python3.12/site-packages/numpy/core/numeric.py:731,</span> in <span class="ni">correlate</span><span class="nt">(a, v, mode)</span>
-<span class="g g-Whitespace">    </span><span class="mi">660</span> <span class="nd">@array_function_dispatch</span><span class="p">(</span><span class="n">_correlate_dispatcher</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">661</span> <span class="k">def</span><span class="w"> </span><span class="nf">correlate</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;valid&#39;</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">662</span><span class="w">     </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">663</span><span class="sd">     Cross-correlation of two 1-dimensional sequences.</span>
-<span class="g g-Whitespace">    </span><span class="mi">664</span><span class="sd"> </span>
-<span class="sd">   (...)    729 </span>
-<span class="g g-Whitespace">    </span><span class="mi">730</span><span class="sd">     &quot;&quot;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">731</span>     <span class="k">return</span> <span class="n">multiarray</span><span class="o">.</span><span class="n">correlate2</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+   Distribusi per subset:
+label   buka  tutup
+subset             
+train    150    150
+val       50     50
 
-<span class="ne">KeyboardInterrupt</span>: 
+✅ Dataset disimpan sebagai &#39;audio_features.csv&#39;
+
+📊 Ringkasan Dataset:
+   Total samples: 400
+   Total features: 54
+   Distribusi label: {&#39;buka&#39;: 200, &#39;tutup&#39;: 200}
+      Progress: 50/50 file
+
+✅ Dataset berhasil dibuat!
+   Total samples: 400
+   Distribusi label:
+label
+buka     200
+tutup    200
+Name: count, dtype: int64
+
+   Distribusi per subset:
+label   buka  tutup
+subset             
+train    150    150
+val       50     50
+
+✅ Dataset disimpan sebagai &#39;audio_features.csv&#39;
+
+📊 Ringkasan Dataset:
+   Total samples: 400
+   Total features: 54
+   Distribusi label: {&#39;buka&#39;: 200, &#39;tutup&#39;: 200}
 </pre></div>
 </div>
 </div>
@@ -2524,7 +2646,7 @@ CV Score: 1.0000 (100.00%)</p>
   <div class="footer-item">
     
 <p class="component-author">
-By The Jupyter Book community
+By The Jupyter Book Community
 </p>
 
   </div>
