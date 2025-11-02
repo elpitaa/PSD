@@ -1,24 +1,17 @@
-# Table of contents
-# Learn more at https://jupyterbook.org/customize/toc.html
-
 format: jb-book
-root: intro
+root: tugas/intro
 
 chapters:
-  - file: Business Problem
-  - file: Data Understanding
+  - file: tugas/Business Problem
+  - file: tugas/Data Understanding
     sections:
-      - file: Eksplorasi Data
-  - file: Preprocessing Data
-  - file: Tugas Power BI
-  - file: "Coli Protein PCA & ADASYN Implementation"
+      - file: tugas/Eksplorasi Data
+  - file: tugas/Preprocessing Data
+  - file: tugas/Tugas Power BI
+  - file: "tugas/Coli Protein PCA & ADASYN Implementation"
     sections:
-      - file: Klasifikasi Naive Bayes
-      - file: Klasifikasi Random Forest
-  - file: Outlier Detection dan Unbalanced Dataset Analysis di KNIME
-  - file: Prediksi Nilai NO2 Satu Hari Kedepan dengan KNN Regression
-    sections:
-      - file: aplikasi prediksi NO2
-  - file: Identifikasi Suara Buka Tutup Menggunakan Feature Statistik Time Series
-    sections:
-      - file: aplikasi identifikasi suara
+      - file: tugas/Klasifikasi Naive Bayes
+      - file: tugas/Klasifikasi Random Forest
+  - file: tugas/Outlier Detection dan Unbalanced Dataset Analysis di KNIME
+  - file: tugas/Prediksi Nilai NO2 Satu Hari Kedepan dengan KNN Regression
+  - file: tugas/Identifikasi Suara Buka Tutup Menggunakan Feature Statistik Time Series
