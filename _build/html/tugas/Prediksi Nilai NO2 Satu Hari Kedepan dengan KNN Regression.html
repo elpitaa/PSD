@@ -1465,62 +1465,18 @@ LANGKAH 6: KNN REGRESSION MODELING - OPTIMASI HYPERPARAMETER
 ======================================================================
 
 Data Siap:
-  - Bentuk fitur training: (314, 3) (3 fitur lag - ternormalisasi)
-  - Bentuk fitur testing: (79, 3) (3 fitur lag - ternormalisasi)
-  - Range target: [0.00000309, 0.00010635] mol/m²
-
-======================================================================
-OPTIMASI HYPERPARAMETER DENGAN GRID SEARCH + 5-FOLD CROSS VALIDATION
-======================================================================
-
-Mencari kombinasi hyperparameter terbaik...
-  - Parameter n_neighbors: [2, 3, 5, 7, 9, 11, 13, 15]
-  - Parameter weights: [&#39;uniform&#39;, &#39;distance&#39;]
-  - Parameter metric: [&#39;euclidean&#39;, &#39;manhattan&#39;, &#39;minkowski&#39;]
-  - Total kombinasi: 48
-  - Cross-validation folds: 5
-
-Proses optimasi sedang berjalan (ini bisa memakan waktu beberapa menit)...
-Fitting 5 folds for each of 48 candidates, totalling 240 fits
-
-✓ Grid Search selesai!
-
-======================================================================
-HASIL OPTIMASI
-======================================================================
-
-Parameter Terbaik:
-  - n_neighbors (K): 5
-  - weights: uniform
-  - metric: manhattan
-  - Best CV Score (neg_MSE): -0.0000000001
-  - Best CV Score (MSE): 0.0000000001
-
-======================================================================
-PERFORMA MODEL PADA TEST SET
-======================================================================
-  - MSE:  0.0000000001
-  - RMSE: 0.0000080251
-  - MAE:  0.0000060256
-  - MAPE: 32.57%
-  - R²:   0.1300
-
-======================================================================
-ANALISIS GRID SEARCH RESULTS
-======================================================================
-
-Top 5 Kombinasi Hyperparameter Terbaik:
- param_n_neighbors param_weights param_metric  mean_test_score_positive  std_test_score
-                 5       uniform    manhattan              7.454965e-11    7.788309e-11
-                 7       uniform    manhattan              7.488020e-11    8.119955e-11
-                 7       uniform    euclidean              7.521243e-11    8.093352e-11
-                 7       uniform    minkowski              7.521243e-11    8.093352e-11
-                 9       uniform    euclidean              7.532960e-11    8.192196e-11
 </pre></div>
 </div>
-<img alt="../_images/46583681e64667eb2c2150b538f8b6b602ef8949dd39145d39b4e97934d0d8bd.png" src="../_images/46583681e64667eb2c2150b538f8b6b602ef8949dd39145d39b4e97934d0d8bd.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>✓ Model KNN Regression telah dioptimasi dengan Grid Search!
-✓ Model terbaik akan digunakan untuk evaluasi dan prediksi selanjutnya.
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">12</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Data Siap:&quot;</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">12</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - Bentuk fitur training: </span><span class="si">{</span><span class="n">X_train_scaled</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2"> (3 fitur lag - ternormalisasi)&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - Bentuk fitur testing: </span><span class="si">{</span><span class="n">X_test_scaled</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2"> (3 fitur lag - ternormalisasi)&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - Range target: [</span><span class="si">{</span><span class="n">y_target</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">y_target</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.8f</span><span class="si">}</span><span class="s2">] mol/m²&quot;</span><span class="p">)</span>
+
+<span class="ne">NameError</span>: name &#39;X_train_scaled&#39; is not defined
 </pre></div>
 </div>
 </div>
