@@ -31,8 +31,8 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-['# =====================================================================', '# JALANKAN HYPERPARAMETER TUNING', '# =====================================================================', '# Note: Proses ini memakan waktu beberapa menit', '']
+['# Ekstraksi feature dari semua file audio', 'print("🚀 Memulai ekstraksi feature...")', 'print("="*70)', '', '# Definisi path folder audio (sesuai dengan struktur folder yang sudah dicek)']
 ...
-['print("="*70)', 'print(f"Model: {best_model_name}")', 'print(f"Test Accuracy: {tuned_results[best_model_name][\'test_accuracy\']:.4f}")', 'print(f"Best Parameters: {tuned_results[best_model_name][\'best_params\']}")', 'print("="*70)']
+['# Info dataset', 'print(f"\\n📊 Ringkasan Dataset:")', 'print(f"   Total samples: {len(df)}")', 'print(f"   Total features: {len(df.columns) - 2}")', 'print(f"   Distribusi label: {dict(df[\'label\'].value_counts())}")']
 -------------------
 
