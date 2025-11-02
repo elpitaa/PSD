@@ -7,10 +7,10 @@ import os
 # ===============================
 # Load Model & Scaler
 # ===============================
-# model and scaler were saved with joblib (sklearn). Use joblib.load to read them.
+# Pastikan path sesuai dengan folder app.py
 base_path = os.path.dirname(__file__)
-model = load("knn_model.pkl")
-scaler = load("minmax_scaler.pkl")
+model = load(os.path.join(base_path, "knn_model.pkl"))
+scaler = load(os.path.join(base_path, "minmax_scaler.pkl"))
 
 # Tentukan berapa fitur yang diharapkan
 expected_n_features = None
@@ -18,7 +18,6 @@ if hasattr(scaler, "n_features_in_"):
     expected_n_features = int(scaler.n_features_in_)
 elif hasattr(model, "n_features_in_"):
     expected_n_features = int(model.n_features_in_)
-
 
 # ===============================
 # Judul Aplikasi
@@ -38,9 +37,6 @@ st.markdown(
 # ===============================
 st.subheader("Masukkan Nilai Fitur")
 
-# Kamu bisa ubah daftar fitur sesuai dengan data training kamu
-# Default daftar fitur yang ditampilkan ke user. Jika jumlah fitur yang diharapkan
-# berbeda, kita akan menyesuaikan nama fitur menjadi generic (Feature 1, ...).
 default_feature_names = [
     "PM10", "SO2", "CO", "O3", "Temperature", "Humidity", "WindSpeed"
 ]
@@ -51,24 +47,24 @@ else:
     if expected_n_features == len(default_feature_names):
         feature_names = default_feature_names
     else:
-        # Buat nama generic agar UI menyesuaikan dengan scaler/model yang ada
         feature_names = [f"Feature_{i+1}" for i in range(expected_n_features)]
         st.warning(
             f"Model saat ini mengharapkan {expected_n_features} fitur.\n"
             "Gunakan urutan fitur yang sama saat model dilatih.\n"
             "Jika Anda ingin memakai nama fitur yang spesifik, edit kode aplikasi ini."
         )
-        # Beri informasi internal scaler untuk membantu pemetaan fitur
         try:
-            st.caption(f"Info scaler: n_features_in_={getattr(scaler,'n_features_in_',None)}, min_={getattr(scaler,'min_',None)}, scale_={getattr(scaler,'scale_',None)}")
+            st.caption(f"Info scaler: n_features_in_={getattr(scaler,'n_features_in_',None)}, "
+                       f"min_={getattr(scaler,'min_',None)}, scale_={getattr(scaler,'scale_',None)}")
         except Exception:
             pass
 
-# Siapkan nilai default yang masuk akal: gunakan mid-point pada skala (0.5) jika scaler tersedia
+# ===============================
+# Default Input (nilai pertengahan)
+# ===============================
 default_inputs = None
 try:
     if hasattr(scaler, 'min_') and hasattr(scaler, 'scale_'):
-        # transform inverse: X = (X_scaled - min_) / scale_
         mid_scaled = np.full(int(expected_n_features or len(feature_names)), 0.5)
         default_inputs = ((mid_scaled - scaler.min_) / scaler.scale_).astype(float)
 except Exception:
@@ -86,25 +82,31 @@ for i, name in enumerate(feature_names):
 # Prediksi
 # ===============================
 if st.button("Prediksi NO₂"):
-    # Ubah input menjadi array numpy
     data = np.array(inputs).reshape(1, -1)
     try:
-        # Normalisasi dengan scaler
+        # Normalisasi input dengan scaler
         data_scaled = scaler.transform(data)
-
-        # Prediksi dengan model KNN
+        # Prediksi dengan model
         pred = model.predict(data_scaled)
-
-        # Tampilkan hasil dan informasi debug kecil
-        # Tampilkan prediksi dengan presisi lebih tinggi dan juga versi yang dibulatkan
         pred_val = float(pred[0])
-        st.success(f"Prediksi Konsentrasi NO₂ Besok: {pred_val:.6f} µg/m³")
-        st.caption(f"(dibulatkan ke 2 desimal: {pred_val:.2f} µg/m³)")
+
+        # ==========================
+        # 💡 Denormalisasi hasil prediksi
+        # Ganti nilai di bawah ini sesuai rentang data asli NO₂ kamu saat training
+        y_min, y_max = 5.0, 200.0
+        pred_real = pred_val * (y_max - y_min) + y_min
+        # ==========================
+
+        # Tampilkan hasil
+        st.success(f"Prediksi Konsentrasi NO₂ Besok: {pred_real:.2f} µg/m³")
+        st.caption(f"(Nilai mentah model: {pred_val:.6f})")
+
         with st.expander("Detail input & transform"):
             st.write({
                 'raw_input': data.tolist(),
                 'scaled_input': data_scaled.tolist(),
-                'prediction': pred.tolist()
+                'prediction_raw': pred.tolist(),
+                'prediction_real': pred_real
             })
     except Exception as e:
         st.error(f"Terjadi kesalahan saat memprediksi: {e}")
@@ -114,4 +116,3 @@ if st.button("Prediksi NO₂"):
 # ===============================
 st.markdown("---")
 st.caption("Dibuat menggunakan Streamlit | Model: KNN Regression")
-
