@@ -1,6 +1,13 @@
-# Sistem Prediksi & Analisis Data
+```{image} _static/logo.png
+:alt: Logo
+:width: 200px
+:align: center
+```
 
-Selamat datang di buku proyek **Sistem Prediksi & Analisis Data**.  
-Buku ini berisi kumpulan notebook dan analisis yang mencakup preprocessing data, klasifikasi, deteksi outlier, serta implementasi model prediksi.
+# Halo!
 
-Gunakan menu di sebelah kiri untuk menjelajahi setiap bagian proyek.
+Perkenalkan saya:
+
+- **Nama:** Elvita Dian Prameswari  
+- **NIM:** 230411100128  
+- **Email:** [elvitadianpra@gmail.com](mailto:elvitadianpra@gmail.com)

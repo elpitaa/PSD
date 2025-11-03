@@ -3,30 +3,32 @@
 
 title: My sample book
 author: The Jupyter Book Community
-logo: logo.png
+logo: _static/logo.png
 
-# Force re-execution of notebooks on each build.
-# See https://jupyterbook.org/content/execute.html
+
+# Notebook execution settings
 execute:
-  execute_notebooks: off
+  execute_notebooks: off  # biar gak re-run notebook tiap build
 
 # Define the name of the latex output file for PDF builds
 latex:
   latex_documents:
     targetname: book.tex
 
-# Add a bibtex file so that we can create citations
+# References (kalau pakai sitasi)
 bibtex_bibfiles:
   - references.bib
 
-# Information about where the book exists on the web
+# Repository info (buat tombol di pojok kanan atas)
 repository:
-  url: https://github.com/elpitaa/PSD  # Online location of your book
-  path_to_book: tugas  # Optional path to your book, relative to the repository root
-  branch: main # Which branch of the repository should be used when creating links (optional)
+  url: https://github.com/elpitaa/PSD  # repo kamu
+  path_to_book: tugas                  # lokasi folder buku
+  branch: main                         # branch yang digunakan
 
-# Add GitHub buttons to your book
-# See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
+# HTML config (tampilan web)
 html:
-  use_issues_button: true
+  favicon: _static/logo.png            # ✅ biar ikon di tab browser juga logo
   use_repository_button: true
+  use_issues_button: true
+  use_edit_page_button: false          # opsional
+  extra_navbar: ""                     # hapus navbar default (opsional)
