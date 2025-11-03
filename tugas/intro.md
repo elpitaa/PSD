@@ -1,9 +1,3 @@
-```{image} _static/logo.png
-:alt: Logo
-:width: 200px
-:align: center
-```
-
 # Halo!
 
 Perkenalkan saya:
