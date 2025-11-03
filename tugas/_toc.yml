@@ -6,7 +6,7 @@ chapters:
   - file: Data Understanding
     sections:
       - file: Eksplorasi Data
-  - file: Reprocessing Data
+  - file: Preprocessing Data
   - file: Tugas Power BI
   - file: "Coli Protein PCA & ADASYN Implementation"
     sections:
