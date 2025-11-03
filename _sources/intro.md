@@ -1,11 +1,6 @@
-# Welcome to your Jupyter Book
+# Sistem Prediksi & Analisis Data
 
-This is a small sample book to give you a feel for how book content is
-structured.
-It shows off a few of the major file types, as well as some sample content.
-It does not go in-depth into any particular topic - check out [the Jupyter Book documentation](https://jupyterbook.org) for more information.
+Selamat datang di buku proyek **Sistem Prediksi & Analisis Data**.  
+Buku ini berisi kumpulan notebook dan analisis yang mencakup preprocessing data, klasifikasi, deteksi outlier, serta implementasi model prediksi.
 
-Check out the content pages bundled with this sample book to see more.
-
-```{tableofcontents}
-```
+Gunakan menu di sebelah kiri untuk menjelajahi setiap bagian proyek.

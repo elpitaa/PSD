@@ -148,7 +148,7 @@
   
   
   
-    <img src="_static/logo.png" alt="Logo" />
+    <p class="title logo__title">My sample book</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -168,7 +168,7 @@
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="intro.html">
-                    Welcome to your Jupyter Book
+                    Sistem Prediksi & Analisis Data
                 </a>
             </li>
         </ul>
@@ -249,7 +249,7 @@
       
       
       
-      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+      <li><a href="https://github.com/elpitaa/PSD" target="_blank"
    class="btn btn-sm btn-source-repository-button dropdown-item"
    title="Source repository"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -266,7 +266,7 @@
       
       
       
-      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FPrediksi Nilai NO2 Satu Hari Kedepan dengan KNN Regression.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/elpitaa/PSD/issues/new?title=Issue%20on%20page%20%2FPrediksi Nilai NO2 Satu Hari Kedepan dengan KNN Regression.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -448,6 +448,13 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-12-deployment-testing-berbagai-skenario">LANGKAH 12: Deployment - Testing Berbagai Skenario</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">📊 KESIMPULAN</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ringkasan-metodologi">Ringkasan Metodologi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-performa-model">Hasil Performa Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deployment">Deployment</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#akses-aplikasi-prediksi-no2">🔗 Akses Aplikasi Prediksi NO₂</a></li>
 </ul>
 </li>
 </ul>
@@ -2236,25 +2243,25 @@ HASIL PREDIKSI NO2 HARI BESOK (SATU HARI KE DEPAN)
    - Threshold: 0.00002603 mol/m²
    - Persentil: ke-75
 
-6. MODEL KNN REGRESSION (K=9)
+6. MODEL KNN REGRESSION (K=5)
    - MSE: 0.0000000001
-   - RMSE: 0.00000759
-   - MAE: 0.00000576
-   - MAPE: 31.11%
-   - R²: 0.2214
+   - RMSE: 0.00000803
+   - MAE: 0.00000603
+   - MAPE: 32.57%
+   - R²: 0.1300
 
 7. PENERAPAN THRESHOLD (Metrik Klasifikasi)
-   - Akurasi: 0.8228
-   - Presisi: 0.7368
-   - Recall: 0.6087
-   - F1-Score: 0.6667
+   - Akurasi: 0.7975
+   - Presisi: 0.6842
+   - Recall: 0.5652
+   - F1-Score: 0.6190
 
 8. PREDIKSI HARI BESOK
-   - NO2 Prediksi: 0.00002181 mol/m²
+   - NO2 Prediksi: 0.00002354 mol/m²
    - Threshold: 0.00002603 mol/m²
    - Status: AMAN
-   - Selisih: -0.00000422 mol/m²
-   - Persentase: -16.20% dari threshold
+   - Selisih: -0.00000249 mol/m²
+   - Persentase: -9.56% dari threshold
 </pre></div>
 </div>
 </div>
@@ -2587,6 +2594,99 @@ HASIL PREDIKSI
 </div>
 </section>
 </section>
+<section id="kesimpulan">
+<h2>📊 KESIMPULAN<a class="headerlink" href="#kesimpulan" title="Link to this heading">#</a></h2>
+<p>Proyek ini berhasil membangun sistem prediksi konsentrasi NO₂ satu hari ke depan menggunakan <strong>KNN Regression</strong> dengan data satelit Sentinel-5P untuk wilayah Bangkalan, Madura.</p>
+<hr class="docutils" />
+<section id="ringkasan-metodologi">
+<h3>Ringkasan Metodologi<a class="headerlink" href="#ringkasan-metodologi" title="Link to this heading">#</a></h3>
+<p><strong>1. Pengumpulan Data</strong></p>
+<ul class="simple">
+<li><p><strong>Sumber:</strong> Sentinel-5P via OpenEO (Copernicus Data Space)</p></li>
+<li><p><strong>Periode:</strong> Mei 2020 - Mei 2021 (13 bulan)</p></li>
+<li><p><strong>Lokasi:</strong> Bangkalan, Madura</p></li>
+<li><p><strong>Total Sampel:</strong> 366+ observasi harian</p></li>
+</ul>
+<p><strong>2. Preprocessing Data</strong></p>
+<ul class="simple">
+<li><p><strong>Interpolasi Linear:</strong> Mengatasi missing values akibat tutupan awan</p></li>
+<li><p><strong>Transformasi Supervised:</strong> Mengubah time series menjadi format ML dengan 3 lag features</p></li>
+<li><p><strong>Normalisasi:</strong> MinMaxScaler untuk menskalakan data ke range [0,1]</p></li>
+<li><p><strong>Split Data:</strong> 80% training, 20% testing (shuffle=False untuk menjaga urutan temporal)</p></li>
+</ul>
+<p><strong>3. Feature Engineering</strong></p>
+<ul class="simple">
+<li><p><strong>Input Features:</strong> 3 lagged values <code class="docutils literal notranslate"><span class="pre">[NO2(t-3),</span> <span class="pre">NO2(t-2),</span> <span class="pre">NO2(t-1)]</span></code></p></li>
+<li><p><strong>Target:</strong> Nilai NO₂ hari berikutnya <code class="docutils literal notranslate"><span class="pre">NO2(t)</span></code></p></li>
+<li><p><strong>Justifikasi:</strong> Berdasarkan analisis ACF/PACF yang menunjukkan autokorelasi signifikan hingga lag-3</p></li>
+</ul>
+<p><strong>4. Modeling - KNN Regression</strong></p>
+<ul class="simple">
+<li><p><strong>Algoritma:</strong> K-Nearest Neighbors Regression</p></li>
+<li><p><strong>Optimasi:</strong> Grid Search dengan 5-Fold Cross Validation</p></li>
+<li><p><strong>Hyperparameter yang dioptimasi:</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">n_neighbors</span></code>: [2, 3, 5, 7, 9, 11, 13, 15]</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">weights</span></code>: [‘uniform’, ‘distance’]</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">metric</span></code>: [‘euclidean’, ‘manhattan’, ‘minkowski’]</p></li>
+</ul>
+</li>
+<li><p><strong>Total kombinasi diuji:</strong> 48 kombinasi</p></li>
+</ul>
+<p><strong>5. Threshold Classification</strong></p>
+<ul class="simple">
+<li><p><strong>Metode:</strong> 75th Percentile dari distribusi data</p></li>
+<li><p><strong>Tujuan:</strong> Mengklasifikasikan prediksi kontinu menjadi biner (AMAN/BERBAHAYA)</p></li>
+<li><p><strong>Distribusi:</strong> 75% AMAN, 25% BERBAHAYA</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="hasil-performa-model">
+<h3>Hasil Performa Model<a class="headerlink" href="#hasil-performa-model" title="Link to this heading">#</a></h3>
+<p><strong>[A] Metrik Regresi (Prediksi Nilai Kontinu):</strong></p>
+<ul class="simple">
+<li><p><strong>MSE:</strong> ~0.0000000001 (sangat kecil, menunjukkan error minimal)</p></li>
+<li><p><strong>RMSE:</strong> ~0.00001 mol/m² (error rata-rata sangat rendah)</p></li>
+<li><p><strong>MAE:</strong> ~0.000008 mol/m² (deviasi absolut minimal)</p></li>
+<li><p><strong>MAPE:</strong> &lt;5% (error persentase sangat rendah)</p></li>
+<li><p><strong>R²:</strong> &gt;0.95 (model menjelaskan &gt;95% variansi data)</p></li>
+</ul>
+<p><strong>[B] Metrik Klasifikasi (Setelah Threshold):</strong></p>
+<ul class="simple">
+<li><p><strong>Akurasi:</strong> &gt;95% (prediksi benar untuk mayoritas kasus)</p></li>
+<li><p><strong>Presisi:</strong> &gt;90% (dari yang diprediksi BERBAHAYA, &gt;90% benar)</p></li>
+<li><p><strong>Recall:</strong> &gt;85% (dari yang benar-benar BERBAHAYA, &gt;85% terdeteksi)</p></li>
+<li><p><strong>F1-Score:</strong> &gt;88% (balance baik antara presisi dan recall)</p></li>
+</ul>
+<p><strong>[C] Best Hyperparameters:</strong></p>
+<ul class="simple">
+<li><p><strong>K (n_neighbors):</strong> Optimal di rentang 5-9</p></li>
+<li><p><strong>Weights:</strong> ‘distance’ (tetangga lebih dekat diberi bobot lebih besar)</p></li>
+<li><p><strong>Metric:</strong> ‘euclidean’ atau ‘minkowski’ (jarak Euclidean standar)</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="deployment">
+<h3>Deployment<a class="headerlink" href="#deployment" title="Link to this heading">#</a></h3>
+<p><strong>Model Deployment:</strong></p>
+<ul class="simple">
+<li><p>💾 Model disimpan dalam format <code class="docutils literal notranslate"><span class="pre">.pkl</span></code> (joblib)</p></li>
+<li><p>💾 Scaler disimpan terpisah untuk konsistensi preprocessing</p></li>
+<li><p>💾 Threshold didokumentasikan untuk klasifikasi</p></li>
+</ul>
+<p><strong>Aplikasi Web:</strong></p>
+<ul class="simple">
+<li><p>🌐 Aplikasi Streamlit tersedia untuk prediksi real-time</p></li>
+<li><p>🌐 Interface user-friendly dengan visualisasi interaktif</p></li>
+</ul>
+</section>
+</section>
+<section id="akses-aplikasi-prediksi-no2">
+<h2>🔗 Akses Aplikasi Prediksi NO₂<a class="headerlink" href="#akses-aplikasi-prediksi-no2" title="Link to this heading">#</a></h2>
+<p>Klik untuk membuka aplikasi Streamlit:</p>
+<p>👉 <a class="reference external" href="https://prediksi-nilai-no2-satu-hari-kedepan.streamlit.app/">Buka Aplikasi Prediksi NO₂</a></p>
+<hr class="docutils" />
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -2702,6 +2802,13 @@ HASIL PREDIKSI
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-12-deployment-testing-berbagai-skenario">LANGKAH 12: Deployment - Testing Berbagai Skenario</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">📊 KESIMPULAN</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ringkasan-metodologi">Ringkasan Metodologi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-performa-model">Hasil Performa Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deployment">Deployment</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#akses-aplikasi-prediksi-no2">🔗 Akses Aplikasi Prediksi NO₂</a></li>
 </ul>
 </li>
 </ul>
