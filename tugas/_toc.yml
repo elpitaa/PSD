@@ -1,0 +1,17 @@
+format: jb-book
+root: intro
+
+chapters:
+  - file: Business Problem
+  - file: Data Understanding
+    sections:
+      - file: Eksplorasi Data
+  - file: Reprocessing Data
+  - file: Tugas Power BI
+  - file: "Coli Protein PCA & ADASYN Implementation"
+    sections:
+      - file: Klasifikasi Naive Bayes
+      - file: Klasifikasi Random Forest
+  - file: Outlier Detection dan Unbalanced Dataset Analysis di KNIME
+  - file: Prediksi Nilai NO2 Satu Hari Kedepan dengan KNN Regression
+  - file: Identifikasi Suara Buka Tutup Menggunakan Feature Statistik Time Series
