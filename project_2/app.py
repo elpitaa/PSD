@@ -297,7 +297,7 @@ st.markdown(f"""
 # ===============================
 # Tab untuk Input
 # ===============================
-tab1, tab2 = st.tabs(["🎵 Upload Audio", "ℹ️ Informasi Model"])
+tab1, tab2, tab3 = st.tabs(["🎵 Upload Audio", "🎙️ Rekam Suara", "ℹ️ Informasi Model"])
 
 with tab1:
     st.subheader("Upload File Audio")
@@ -455,6 +455,202 @@ with tab1:
             """)
 
 with tab2:
+    st.subheader("🎙️ Rekam Suara Manual")
+    st.markdown("🎤 **Rekam suara Anda langsung dari browser**")
+    
+    # Audio recorder menggunakan streamlit-audiorecorder
+    try:
+        from audiorecorder import audiorecorder
+        
+        st.info("""
+        **📋 Cara Menggunakan:**
+        1. Klik tombol ▶️ untuk mulai merekam
+        2. Ucapkan kata **"Buka"** atau **"Tutup"**
+        3. Klik tombol ⏹️ untuk berhenti
+        4. Audio akan dianalisis otomatis
+        """)
+        
+        audio_recorded = audiorecorder("🎙️ Mulai Rekam", "⏹️ Berhenti", key="audio_recorder")
+        
+        if len(audio_recorded) > 0:
+            col1, col2 = st.columns([2, 1])
+            
+            with col1:
+                # Display audio player
+                st.audio(audio_recorded.export().read())
+                
+                if st.button("🔍 Analisis Rekaman & Verifikasi Speaker", type="primary", use_container_width=True):
+                    with st.spinner("Menganalisis rekaman & memverifikasi speaker..."):
+                        try:
+                            # Convert AudioSegment to numpy array
+                            audio_array = np.array(audio_recorded.get_array_of_samples(), dtype=np.float32)
+                            
+                            # Normalize to [-1, 1]
+                            if audio_recorded.sample_width == 2:  # 16-bit
+                                audio_array = audio_array / 32768.0
+                            elif audio_recorded.sample_width == 4:  # 32-bit
+                                audio_array = audio_array / 2147483648.0
+                            
+                            # Get sample rate
+                            sr_recorded = audio_recorded.frame_rate
+                            
+                            # Resample to 22050 if needed
+                            if sr_recorded != 22050:
+                                audio_data = librosa.resample(audio_array, orig_sr=sr_recorded, target_sr=22050)
+                                sr = 22050
+                            else:
+                                audio_data = audio_array
+                                sr = sr_recorded
+                            
+                            # Limit duration to 5 seconds
+                            max_samples = 5 * sr
+                            if len(audio_data) > max_samples:
+                                audio_data = audio_data[:max_samples]
+                            
+                            # Ekstraksi fitur
+                            features = extract_audio_features(audio_data, sr)
+                            
+                            if features is not None:
+                                # Normalisasi features
+                                features_scaled = scaler.transform(features.reshape(1, -1))
+                                
+                                # Prediksi
+                                prediction = model.predict(features_scaled)[0]
+                                prediction_label = label_encoder.inverse_transform([prediction])[0]
+                                
+                                # Get confidence
+                                if hasattr(model, 'predict_proba'):
+                                    proba = model.predict_proba(features_scaled)[0]
+                                    confidence = np.max(proba) * 100
+                                else:
+                                    confidence = None
+                                
+                                # Parse label (format: speaker_action)
+                                if '_' in prediction_label:
+                                    speaker, action = prediction_label.split('_')
+                                else:
+                                    speaker, action = 'unknown', 'unknown'
+                                
+                                # Speaker Verification
+                                is_authorized = speaker in AUTHORIZED_SPEAKERS
+                                is_confident = confidence is None or confidence >= CONFIDENCE_THRESHOLD
+                                
+                                # Tampilkan hasil
+                                st.success("✅ Analisis Selesai!")
+                                
+                                # Result card dengan speaker verification
+                                if is_authorized and is_confident:
+                                    # AUTHORIZED
+                                    if action.lower() == "buka":
+                                        result_color = "#28a745"
+                                        icon = "🔓"
+                                        status_icon = "✅"
+                                        status_text = "AUTHORIZED"
+                                    else:
+                                        result_color = "#dc3545"
+                                        icon = "🔒"
+                                        status_icon = "✅"
+                                        status_text = "AUTHORIZED"
+                                    
+                                    st.markdown(f"""
+                                    <div style='background-color: {result_color}; padding: 30px; border-radius: 15px; text-align: center; color: white; margin: 20px 0;'>
+                                        <h1 style='margin: 0; font-size: 4em;'>{icon}</h1>
+                                        <h2 style='margin: 10px 0;'>Perintah Terdeteksi:</h2>
+                                        <h1 style='margin: 0; font-size: 3em;'>{action.upper()}</h1>
+                                        <h3 style='margin: 15px 0;'>{status_icon} Speaker: {speaker.upper()}</h3>
+                                        <p style='margin: 0; font-size: 1.1em; opacity: 0.9;'>{status_text}</p>
+                                        {f"<p style='margin-top: 10px; font-size: 1.2em;'>Confidence: {confidence:.1f}%</p>" if confidence else ""}
+                                    </div>
+                                    """, unsafe_allow_html=True)
+                                    
+                                else:
+                                    # UNAUTHORIZED
+                                    st.markdown(f"""
+                                    <div style='background-color: #ff6b6b; padding: 30px; border-radius: 15px; text-align: center; color: white; margin: 20px 0;'>
+                                        <h1 style='margin: 0; font-size: 4em;'>🚫</h1>
+                                        <h2 style='margin: 10px 0;'>AKSES DITOLAK</h2>
+                                        <h3 style='margin: 15px 0;'>❌ UNAUTHORIZED SPEAKER</h3>
+                                        <p style='margin: 10px 0; font-size: 1.1em;'>
+                                            Detected: {speaker.upper() if speaker != 'unknown' else 'UNKNOWN'}<br>
+                                            {f"Confidence: {confidence:.1f}%" if confidence else ""}
+                                        </p>
+                                        <p style='margin-top: 15px; font-size: 0.95em; opacity: 0.9;'>
+                                            ⚠️ Hanya speaker terdaftar yang dapat menggunakan sistem ini<br>
+                                            Authorized speakers: {', '.join([s.capitalize() for s in AUTHORIZED_SPEAKERS])}
+                                        </p>
+                                    </div>
+                                    """, unsafe_allow_html=True)
+                                
+                                # Detail prediksi
+                                with st.expander("📊 Detail Prediksi"):
+                                    col_a, col_b, col_c = st.columns(3)
+                                    with col_a:
+                                        st.metric("👤 Speaker", speaker.upper())
+                                    with col_b:
+                                        st.metric("🎬 Action", action.upper())
+                                    with col_c:
+                                        if confidence:
+                                            st.metric("💯 Confidence", f"{confidence:.1f}%")
+                                    
+                                    st.markdown("---")
+                                    st.markdown(f"**Predicted Label:** `{prediction_label}`")
+                                    st.markdown(f"**Authorized:** {'✅ Yes' if is_authorized else '❌ No'}")
+                                    st.markdown(f"**Confidence Check:** {'✅ Pass' if is_confident else f'❌ Below threshold ({CONFIDENCE_THRESHOLD}%)'}")
+                                    
+                                    if confidence and hasattr(model, 'predict_proba'):
+                                        st.markdown("---")
+                                        st.markdown("**Probability Distribution:**")
+                                        prob_df = pd.DataFrame({
+                                            'Class': classes,
+                                            'Probability': proba * 100
+                                        }).sort_values('Probability', ascending=False)
+                                        st.dataframe(prob_df, use_container_width=True)
+                                
+                                # Detail fitur
+                                with st.expander("🔬 Lihat Detail Fitur Audio"):
+                                    st.markdown(f"**Total Features:** {len(features)}")
+                                    df_features = pd.DataFrame({
+                                        'Fitur': feature_names[:len(features)],
+                                        'Nilai': features
+                                    })
+                                    st.dataframe(df_features, use_container_width=True, height=400)
+                        
+                        except Exception as e:
+                            st.error(f"❌ Error: {str(e)}")
+                            import traceback
+                            st.code(traceback.format_exc())
+            
+            with col2:
+                st.info(f"""
+                **📋 Petunjuk:**
+                1. Klik 'Mulai Rekam'
+                2. Ucapkan perintah
+                3. Klik 'Berhenti'
+                4. Klik 'Analisis'
+                
+                **👥 Authorized Speakers:**
+                {chr(10).join([f'- {s.capitalize()}' for s in AUTHORIZED_SPEAKERS])}
+                
+                **💡 Tips:**
+                - Rekam di tempat tenang
+                - Ucapan jelas & keras
+                - Durasi 1-3 detik
+                - Confidence ≥ {CONFIDENCE_THRESHOLD}%
+                """)
+    
+    except ImportError:
+        st.warning("⚠️ **Library 'audiorecorder' belum terinstall**")
+        st.markdown("""
+        Untuk menggunakan fitur rekam suara, install library berikut:
+        
+        ```bash
+        pip install streamlit-audiorecorder
+        ```
+        
+        Atau gunakan tab **Upload Audio** untuk upload file audio.
+        """)
+
+with tab3:
     st.subheader("ℹ️ Informasi Model - Speaker Verification")
     
     col1, col2 = st.columns(2)
