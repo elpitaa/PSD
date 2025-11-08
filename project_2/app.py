@@ -470,152 +470,150 @@ with tab2:
         4. Klik tombol 'Analisis' di bawah
         """)
         
-        # Record audio
-        wav_audio_data = st_audiorec()
+        col1, col2 = st.columns([2, 1])
         
-        if wav_audio_data is not None:
-            col1, col2 = st.columns([2, 1])
+        with col1:
+            # Record audio
+            wav_audio_data = st_audiorec()
             
-            with col1:
+            if wav_audio_data is not None:
                 # Display audio player
                 st.audio(wav_audio_data, format='audio/wav')
                 
-                if st.button("🔍 Analisis Rekaman & Verifikasi Speaker", type="primary", use_container_width=True):
-                    with st.spinner("Menganalisis rekaman & memverifikasi speaker..."):
-                        try:
-                            # Load audio from bytes
-                            audio_data, sr = librosa.load(io.BytesIO(wav_audio_data), sr=22050, duration=5)
-                            
-                            # Ekstraksi fitur
-                            features = extract_audio_features(audio_data, sr)
-                            
-                            if features is not None:
-                                # Normalisasi features
-                                features_scaled = scaler.transform(features.reshape(1, -1))
-                                
-                                # Prediksi
-                                prediction = model.predict(features_scaled)[0]
-                                prediction_label = label_encoder.inverse_transform([prediction])[0]
-                                
-                                # Get confidence
-                                if hasattr(model, 'predict_proba'):
-                                    proba = model.predict_proba(features_scaled)[0]
-                                    confidence = np.max(proba) * 100
-                                else:
-                                    confidence = None
-                                
-                                # Parse label (format: speaker_action)
-                                if '_' in prediction_label:
-                                    speaker, action = prediction_label.split('_')
-                                else:
-                                    speaker, action = 'unknown', 'unknown'
-                                
-                                # Speaker Verification
-                                is_authorized = speaker in AUTHORIZED_SPEAKERS
-                                is_confident = confidence is None or confidence >= CONFIDENCE_THRESHOLD
-                                
-                                # Tampilkan hasil
-                                st.success("✅ Analisis Selesai!")
-                                
-                                # Result card dengan speaker verification
-                                if is_authorized and is_confident:
-                                    # AUTHORIZED
-                                    if action.lower() == "buka":
-                                        result_color = "#28a745"
-                                        icon = "🔓"
-                                        status_icon = "✅"
-                                        status_text = "AUTHORIZED"
-                                    else:
-                                        result_color = "#dc3545"
-                                        icon = "🔒"
-                                        status_icon = "✅"
-                                        status_text = "AUTHORIZED"
-                                    
-                                    st.markdown(f"""
-                                    <div style='background-color: {result_color}; padding: 30px; border-radius: 15px; text-align: center; color: white; margin: 20px 0;'>
-                                        <h1 style='margin: 0; font-size: 4em;'>{icon}</h1>
-                                        <h2 style='margin: 10px 0;'>Perintah Terdeteksi:</h2>
-                                        <h1 style='margin: 0; font-size: 3em;'>{action.upper()}</h1>
-                                        <h3 style='margin: 15px 0;'>{status_icon} Speaker: {speaker.upper()}</h3>
-                                        <p style='margin: 0; font-size: 1.1em; opacity: 0.9;'>{status_text}</p>
-                                        {f"<p style='margin-top: 10px; font-size: 1.2em;'>Confidence: {confidence:.1f}%</p>" if confidence else ""}
-                                    </div>
-                                    """, unsafe_allow_html=True)
-                                    
-                                else:
-                                    # UNAUTHORIZED
-                                    st.markdown(f"""
-                                    <div style='background-color: #ff6b6b; padding: 30px; border-radius: 15px; text-align: center; color: white; margin: 20px 0;'>
-                                        <h1 style='margin: 0; font-size: 4em;'>🚫</h1>
-                                        <h2 style='margin: 10px 0;'>AKSES DITOLAK</h2>
-                                        <h3 style='margin: 15px 0;'>❌ UNAUTHORIZED SPEAKER</h3>
-                                        <p style='margin: 10px 0; font-size: 1.1em;'>
-                                            Detected: {speaker.upper() if speaker != 'unknown' else 'UNKNOWN'}<br>
-                                            {f"Confidence: {confidence:.1f}%" if confidence else ""}
-                                        </p>
-                                        <p style='margin-top: 15px; font-size: 0.95em; opacity: 0.9;'>
-                                            ⚠️ Hanya speaker terdaftar yang dapat menggunakan sistem ini<br>
-                                            Authorized speakers: {', '.join([s.capitalize() for s in AUTHORIZED_SPEAKERS])}
-                                        </p>
-                                    </div>
-                                    """, unsafe_allow_html=True)
-                                
-                                # Detail prediksi
-                                with st.expander("📊 Detail Prediksi"):
-                                    col_a, col_b, col_c = st.columns(3)
-                                    with col_a:
-                                        st.metric("👤 Speaker", speaker.upper())
-                                    with col_b:
-                                        st.metric("🎬 Action", action.upper())
-                                    with col_c:
-                                        if confidence:
-                                            st.metric("💯 Confidence", f"{confidence:.1f}%")
-                                    
-                                    st.markdown("---")
-                                    st.markdown(f"**Predicted Label:** `{prediction_label}`")
-                                    st.markdown(f"**Authorized:** {'✅ Yes' if is_authorized else '❌ No'}")
-                                    st.markdown(f"**Confidence Check:** {'✅ Pass' if is_confident else f'❌ Below threshold ({CONFIDENCE_THRESHOLD}%)'}")
-                                    
-                                    if confidence and hasattr(model, 'predict_proba'):
-                                        st.markdown("---")
-                                        st.markdown("**Probability Distribution:**")
-                                        prob_df = pd.DataFrame({
-                                            'Class': classes,
-                                            'Probability': proba * 100
-                                        }).sort_values('Probability', ascending=False)
-                                        st.dataframe(prob_df, use_container_width=True)
-                                
-                                # Detail fitur
-                                with st.expander("🔬 Lihat Detail Fitur Audio"):
-                                    st.markdown(f"**Total Features:** {len(features)}")
-                                    df_features = pd.DataFrame({
-                                        'Fitur': feature_names[:len(features)],
-                                        'Nilai': features
-                                    })
-                                    st.dataframe(df_features, use_container_width=True, height=400)
-                        
-                        except Exception as e:
-                            st.error(f"❌ Error: {str(e)}")
-                            import traceback
-                            st.code(traceback.format_exc())
+                st.success("✅ Rekaman berhasil! Klik tombol di bawah untuk analisis.")
+        
+        with col2:
+            st.info(f"""
+            **👥 Authorized Speakers:**
+            {chr(10).join([f'- {s.capitalize()}' for s in AUTHORIZED_SPEAKERS])}
             
-            with col2:
-                st.info(f"""
-                **📋 Petunjuk:**
-                1. Klik 'Click to record'
-                2. Ucapkan perintah
-                3. Klik lagi untuk stop
-                4. Klik 'Analisis'
-                
-                **👥 Authorized Speakers:**
-                {chr(10).join([f'- {s.capitalize()}' for s in AUTHORIZED_SPEAKERS])}
-                
-                **💡 Tips:**
-                - Rekam di tempat tenang
-                - Ucapan jelas & keras
-                - Durasi 1-3 detik
-                - Confidence ≥ {CONFIDENCE_THRESHOLD}%
-                """)
+            **💡 Tips:**
+            - Rekam di tempat tenang
+            - Ucapan jelas & keras
+            - Durasi 1-3 detik
+            - Confidence ≥ {CONFIDENCE_THRESHOLD}%
+            """)
+        
+        # Tombol analisis di luar kolom agar lebih visible
+        if wav_audio_data is not None:
+            if st.button("🔍 Analisis Rekaman & Verifikasi Speaker", type="primary", use_container_width=True, key="analyze_recorded"):
+                with st.spinner("Menganalisis rekaman & memverifikasi speaker..."):
+                    try:
+                        # Load audio from bytes
+                        audio_data, sr = librosa.load(io.BytesIO(wav_audio_data), sr=22050, duration=5)
+                        
+                        # Ekstraksi fitur
+                        features = extract_audio_features(audio_data, sr)
+                        
+                        if features is not None:
+                            # Normalisasi features
+                            features_scaled = scaler.transform(features.reshape(1, -1))
+                            
+                            # Prediksi
+                            prediction = model.predict(features_scaled)[0]
+                            prediction_label = label_encoder.inverse_transform([prediction])[0]
+                            
+                            # Get confidence
+                            if hasattr(model, 'predict_proba'):
+                                proba = model.predict_proba(features_scaled)[0]
+                                confidence = np.max(proba) * 100
+                            else:
+                                confidence = None
+                            
+                            # Parse label (format: speaker_action)
+                            if '_' in prediction_label:
+                                speaker, action = prediction_label.split('_')
+                            else:
+                                speaker, action = 'unknown', 'unknown'
+                            
+                            # Speaker Verification
+                            is_authorized = speaker in AUTHORIZED_SPEAKERS
+                            is_confident = confidence is None or confidence >= CONFIDENCE_THRESHOLD
+                            
+                            # Tampilkan hasil
+                            st.success("✅ Analisis Selesai!")
+                            
+                            # Result card dengan speaker verification
+                            if is_authorized and is_confident:
+                                # AUTHORIZED
+                                if action.lower() == "buka":
+                                    result_color = "#28a745"
+                                    icon = "🔓"
+                                    status_icon = "✅"
+                                    status_text = "AUTHORIZED"
+                                else:
+                                    result_color = "#dc3545"
+                                    icon = "🔒"
+                                    status_icon = "✅"
+                                    status_text = "AUTHORIZED"
+                                
+                                st.markdown(f"""
+                                <div style='background-color: {result_color}; padding: 30px; border-radius: 15px; text-align: center; color: white; margin: 20px 0;'>
+                                    <h1 style='margin: 0; font-size: 4em;'>{icon}</h1>
+                                    <h2 style='margin: 10px 0;'>Perintah Terdeteksi:</h2>
+                                    <h1 style='margin: 0; font-size: 3em;'>{action.upper()}</h1>
+                                    <h3 style='margin: 15px 0;'>{status_icon} Speaker: {speaker.upper()}</h3>
+                                    <p style='margin: 0; font-size: 1.1em; opacity: 0.9;'>{status_text}</p>
+                                    {f"<p style='margin-top: 10px; font-size: 1.2em;'>Confidence: {confidence:.1f}%</p>" if confidence else ""}
+                                </div>
+                                """, unsafe_allow_html=True)
+                                
+                            else:
+                                # UNAUTHORIZED
+                                st.markdown(f"""
+                                <div style='background-color: #ff6b6b; padding: 30px; border-radius: 15px; text-align: center; color: white; margin: 20px 0;'>
+                                    <h1 style='margin: 0; font-size: 4em;'>🚫</h1>
+                                    <h2 style='margin: 10px 0;'>AKSES DITOLAK</h2>
+                                    <h3 style='margin: 15px 0;'>❌ UNAUTHORIZED SPEAKER</h3>
+                                    <p style='margin: 10px 0; font-size: 1.1em;'>
+                                        Detected: {speaker.upper() if speaker != 'unknown' else 'UNKNOWN'}<br>
+                                        {f"Confidence: {confidence:.1f}%" if confidence else ""}
+                                    </p>
+                                    <p style='margin-top: 15px; font-size: 0.95em; opacity: 0.9;'>
+                                        ⚠️ Hanya speaker terdaftar yang dapat menggunakan sistem ini<br>
+                                        Authorized speakers: {', '.join([s.capitalize() for s in AUTHORIZED_SPEAKERS])}
+                                    </p>
+                                </div>
+                                """, unsafe_allow_html=True)
+                            
+                            # Detail prediksi
+                            with st.expander("📊 Detail Prediksi"):
+                                col_a, col_b, col_c = st.columns(3)
+                                with col_a:
+                                    st.metric("👤 Speaker", speaker.upper())
+                                with col_b:
+                                    st.metric("🎬 Action", action.upper())
+                                with col_c:
+                                    if confidence:
+                                        st.metric("💯 Confidence", f"{confidence:.1f}%")
+                                
+                                st.markdown("---")
+                                st.markdown(f"**Predicted Label:** `{prediction_label}`")
+                                st.markdown(f"**Authorized:** {'✅ Yes' if is_authorized else '❌ No'}")
+                                st.markdown(f"**Confidence Check:** {'✅ Pass' if is_confident else f'❌ Below threshold ({CONFIDENCE_THRESHOLD}%)'}")
+                                
+                                if confidence and hasattr(model, 'predict_proba'):
+                                    st.markdown("---")
+                                    st.markdown("**Probability Distribution:**")
+                                    prob_df = pd.DataFrame({
+                                        'Class': classes,
+                                        'Probability': proba * 100
+                                    }).sort_values('Probability', ascending=False)
+                                    st.dataframe(prob_df, use_container_width=True)
+                            
+                            # Detail fitur
+                            with st.expander("🔬 Lihat Detail Fitur Audio"):
+                                st.markdown(f"**Total Features:** {len(features)}")
+                                df_features = pd.DataFrame({
+                                    'Fitur': feature_names[:len(features)],
+                                    'Nilai': features
+                                })
+                                st.dataframe(df_features, use_container_width=True, height=400)
+                    
+                    except Exception as e:
+                        st.error(f"❌ Error: {str(e)}")
+                        import traceback
+                        st.code(traceback.format_exc())
     
     except ImportError:
         st.warning("⚠️ **Library 'st_audiorec' belum terinstall**")
