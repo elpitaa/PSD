@@ -475,6 +475,20 @@ with tab2:
             st.audio(wav_audio_data, format='audio/wav')
             st.success("✅ Rekaman berhasil! Klik tombol di bawah untuk analisis.")
             
+            # Info di sidebar
+            with st.sidebar:
+                st.markdown("### 🎙️ Info Rekaman")
+                st.info(f"""
+                **👥 Authorized Speakers:**
+                {chr(10).join([f'- {s.capitalize()}' for s in AUTHORIZED_SPEAKERS])}
+                
+                **💡 Tips:**
+                - Rekam di tempat tenang
+                - Ucapan jelas & keras
+                - Durasi 1-3 detik
+                - Confidence ≥ {CONFIDENCE_THRESHOLD}%
+                """)
+            
             st.markdown("---")
             
             # TOMBOL ANALISIS - BESAR & JELAS
@@ -604,17 +618,19 @@ with tab2:
                         import traceback
                         st.code(traceback.format_exc())
         else:
-            # Tampilkan tips saat belum merekam
-            st.info(f"""
-            **👥 Authorized Speakers:**
-            {chr(10).join([f'- {s.capitalize()}' for s in AUTHORIZED_SPEAKERS])}
-            
-            **💡 Tips:**
-            - Rekam di tempat tenang
-            - Ucapan jelas & keras
-            - Durasi 1-3 detik
-            - Confidence ≥ {CONFIDENCE_THRESHOLD}%
-            """)
+            # Tampilkan info di sidebar saat belum merekam
+            with st.sidebar:
+                st.markdown("### 🎙️ Info Rekaman")
+                st.info(f"""
+                **👥 Authorized Speakers:**
+                {chr(10).join([f'- {s.capitalize()}' for s in AUTHORIZED_SPEAKERS])}
+                
+                **💡 Tips:**
+                - Rekam di tempat tenang
+                - Ucapan jelas & keras
+                - Durasi 1-3 detik
+                - Confidence ≥ {CONFIDENCE_THRESHOLD}%
+                """)
     
     except ImportError:
         st.warning("⚠️ **Library 'st_audiorec' belum terinstall**")
