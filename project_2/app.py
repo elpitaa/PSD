@@ -458,54 +458,33 @@ with tab2:
     st.subheader("🎙️ Rekam Suara Manual")
     st.markdown("🎤 **Rekam suara Anda langsung dari browser**")
     
-    # Audio recorder menggunakan streamlit-audiorecorder
+    # Audio recorder menggunakan st_audiorec
     try:
-        from audiorecorder import audiorecorder
+        from st_audiorec import st_audiorec
         
         st.info("""
         **📋 Cara Menggunakan:**
-        1. Klik tombol ▶️ untuk mulai merekam
+        1. Klik tombol **"Click to record"** untuk mulai merekam
         2. Ucapkan kata **"Buka"** atau **"Tutup"**
-        3. Klik tombol ⏹️ untuk berhenti
-        4. Audio akan dianalisis otomatis
+        3. Klik lagi untuk berhenti
+        4. Klik tombol 'Analisis' di bawah
         """)
         
-        audio_recorded = audiorecorder("🎙️ Mulai Rekam", "⏹️ Berhenti", key="audio_recorder")
+        # Record audio
+        wav_audio_data = st_audiorec()
         
-        if len(audio_recorded) > 0:
+        if wav_audio_data is not None:
             col1, col2 = st.columns([2, 1])
             
             with col1:
                 # Display audio player
-                st.audio(audio_recorded.export().read())
+                st.audio(wav_audio_data, format='audio/wav')
                 
                 if st.button("🔍 Analisis Rekaman & Verifikasi Speaker", type="primary", use_container_width=True):
                     with st.spinner("Menganalisis rekaman & memverifikasi speaker..."):
                         try:
-                            # Convert AudioSegment to numpy array
-                            audio_array = np.array(audio_recorded.get_array_of_samples(), dtype=np.float32)
-                            
-                            # Normalize to [-1, 1]
-                            if audio_recorded.sample_width == 2:  # 16-bit
-                                audio_array = audio_array / 32768.0
-                            elif audio_recorded.sample_width == 4:  # 32-bit
-                                audio_array = audio_array / 2147483648.0
-                            
-                            # Get sample rate
-                            sr_recorded = audio_recorded.frame_rate
-                            
-                            # Resample to 22050 if needed
-                            if sr_recorded != 22050:
-                                audio_data = librosa.resample(audio_array, orig_sr=sr_recorded, target_sr=22050)
-                                sr = 22050
-                            else:
-                                audio_data = audio_array
-                                sr = sr_recorded
-                            
-                            # Limit duration to 5 seconds
-                            max_samples = 5 * sr
-                            if len(audio_data) > max_samples:
-                                audio_data = audio_data[:max_samples]
+                            # Load audio from bytes
+                            audio_data, sr = librosa.load(io.BytesIO(wav_audio_data), sr=22050, duration=5)
                             
                             # Ekstraksi fitur
                             features = extract_audio_features(audio_data, sr)
@@ -623,9 +602,9 @@ with tab2:
             with col2:
                 st.info(f"""
                 **📋 Petunjuk:**
-                1. Klik 'Mulai Rekam'
+                1. Klik 'Click to record'
                 2. Ucapkan perintah
-                3. Klik 'Berhenti'
+                3. Klik lagi untuk stop
                 4. Klik 'Analisis'
                 
                 **👥 Authorized Speakers:**
@@ -639,12 +618,12 @@ with tab2:
                 """)
     
     except ImportError:
-        st.warning("⚠️ **Library 'audiorecorder' belum terinstall**")
+        st.warning("⚠️ **Library 'st_audiorec' belum terinstall**")
         st.markdown("""
         Untuk menggunakan fitur rekam suara, install library berikut:
         
         ```bash
-        pip install streamlit-audiorecorder
+        pip install streamlit-audiorec
         ```
         
         Atau gunakan tab **Upload Audio** untuk upload file audio.
