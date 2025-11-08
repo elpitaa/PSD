@@ -21,24 +21,80 @@ st.set_page_config(
 # Load Model, Scaler, Label Encoder, dan Metadata - SPEAKER VERIFICATION
 # ===============================
 
-# Dapatkan direktori file saat ini
-if '__file__' in globals():
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-else:
-    current_dir = os.getcwd()
+def find_model_files():
+    """
+    Cari file model di berbagai lokasi yang mungkin
+    Returns: models_dir (direktori yang berisi file model)
+    """
+    # Dapatkan direktori file saat ini
+    if '__file__' in globals():
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+    else:
+        current_dir = os.getcwd()
+    
+    # Daftar lokasi yang mungkin
+    possible_dirs = [
+        os.path.join(os.path.dirname(current_dir), "tugas", "models2"),  # ../tugas/models2/ (NEW!)
+        os.path.join(current_dir, "models2"),  # project_2/models2/
+        os.path.join(current_dir, "models"),   # project_2/models/
+        current_dir,                           # project_2/
+        os.path.join(os.path.dirname(current_dir), "tugas", "models"),  # ../tugas/models/
+        "/workspaces/PSD/tugas/models2",       # Absolute path models2 (development)
+        "/workspaces/PSD/project_2/models",    # Absolute path (development)
+        "/workspaces/PSD/tugas/models",        # Absolute path tugas (development)
+        "/mount/src/psd/tugas/models2",        # Streamlit Cloud path
+        "/mount/src/psd/project_2/models",     # Streamlit Cloud path
+        "/mount/src/psd/models",               # Streamlit Cloud alternative
+    ]
+    
+    # Cek setiap direktori
+    for directory in possible_dirs:
+        if os.path.exists(directory):
+            # Cek speaker_model.pkl (model baru dengan speaker verification)
+            speaker_model_path = os.path.join(directory, "speaker_model.pkl")
+            if os.path.exists(speaker_model_path):
+                return directory
+    
+    return None
 
-# Path ke folder models (sesuaikan jika perlu)
-models_dir = os.path.join(current_dir, "models")
-if not os.path.exists(models_dir):
-    models_dir = current_dir  # Fallback ke current directory
+# Cari direktori model
+models_dir = find_model_files()
+
+if models_dir is None:
+    st.error("❌ File model tidak ditemukan!")
+    st.warning("""
+    **📁 Lokasi yang sudah dicek:**
+    - `project_2/models/`
+    - `project_2/`
+    - `../tugas/models/`
+    
+    **🔧 Solusi:**
+    
+    **Opsi 1: Copy dari tugas/models/**
+    ```bash
+    cd /workspaces/PSD
+    cp tugas/models/speaker_model*.pkl project_2/models/
+    ```
+    
+    **Opsi 2: Training model dulu**
+    1. Buka notebook: `tugas/Identifikasi_Suara_Buka_Tutup.ipynb`
+    2. Jalankan semua cells
+    3. File .pkl akan tersimpan di `tugas/models/`
+    4. Copy ke `project_2/models/`
+    
+    **Opsi 3: Upload manual**
+    - Upload 5 file .pkl ke folder `project_2/models/`
+    - Restart aplikasi
+    """)
+    st.stop()
 
 try:
     # Load model components untuk Speaker Identification
     model = joblib.load(os.path.join(models_dir, "speaker_model.pkl"))
-    scaler = joblib.load(os.path.join(models_dir, "speaker_model_scaler.pkl"))
-    label_encoder = joblib.load(os.path.join(models_dir, "speaker_model_label_encoder.pkl"))
-    feature_names = joblib.load(os.path.join(models_dir, "speaker_model_feature_names.pkl"))
-    metadata = joblib.load(os.path.join(models_dir, "speaker_model_metadata.pkl"))
+    scaler = joblib.load(os.path.join(models_dir, "speaker_scaler.pkl"))
+    label_encoder = joblib.load(os.path.join(models_dir, "speaker_label_encoder.pkl"))
+    feature_names = joblib.load(os.path.join(models_dir, "speaker_feature_names.pkl"))
+    metadata = joblib.load(os.path.join(models_dir, "speaker_metadata.pkl"))
     
     # Classes dari label encoder
     classes = label_encoder.classes_  # ['nadia_buka', 'nadia_tutup', 'ufi_buka', 'ufi_tutup']
@@ -47,21 +103,38 @@ try:
     AUTHORIZED_SPEAKERS = metadata.get('speakers', ['nadia', 'ufi'])
     CONFIDENCE_THRESHOLD = 70.0  # Minimum confidence untuk accept
     
-    st.success("✅ Model berhasil dimuat!")
+    st.success(f"✅ Model berhasil dimuat dari: `{models_dir}`")
     
 except Exception as e:
     st.error(f"❌ Error loading model files: {type(e).__name__}: {str(e)}")
-    st.info(f"📁 Direktori dicari: {models_dir}")
+    st.info(f"📁 Direktori ditemukan: {models_dir}")
     st.warning("""
     **File yang dibutuhkan:**
     - speaker_model.pkl
-    - speaker_model_scaler.pkl
-    - speaker_model_label_encoder.pkl
-    - speaker_model_feature_names.pkl
-    - speaker_model_metadata.pkl
+    - speaker_scaler.pkl
+    - speaker_label_encoder.pkl
+    - speaker_feature_names.pkl
+    - speaker_metadata.pkl
     
-    Pastikan file-file ini ada di folder 'models/' atau di direktori yang sama dengan app.py
+    **Cek apakah semua file ada:**
+    ```bash
+    ls -la tugas/models2/
+    ```
     """)
+    
+    # Debug info
+    with st.expander("🔍 Debug Information"):
+        st.code(f"Models directory: {models_dir}")
+        if os.path.exists(models_dir):
+            st.write("Files in directory:")
+            try:
+                files = os.listdir(models_dir)
+                for f in files:
+                    st.write(f"  - {f}")
+            except:
+                st.write("  (Cannot list files)")
+        st.code(f"Error: {str(e)}")
+    
     st.stop()
 
 # ===============================
