@@ -464,7 +464,7 @@ with tab2:
         1. Klik tombol **"Click to record"** untuk mulai merekam
         2. Ucapkan kata **"Buka"** atau **"Tutup"**
         3. Klik lagi untuk berhenti
-        4. Hasil analisis akan muncul di bawah
+        4. Klik tombol **"Analisis"** untuk memproses
         """)
         
         # Record audio
@@ -473,15 +473,19 @@ with tab2:
         if wav_audio_data is not None:
             # Display audio player
             st.audio(wav_audio_data, format='audio/wav')
-            st.success("✅ Rekaman berhasil!")
+            st.success("✅ Rekaman berhasil! Klik tombol di bawah untuk analisis.")
             
-            # Simpan di session state untuk tracking
-            if 'last_audio' not in st.session_state or st.session_state.last_audio != wav_audio_data:
-                st.session_state.last_audio = wav_audio_data
-                st.session_state.analyzed = False
+            st.markdown("---")
             
-            # Auto-analyze jika belum dianalisis
-            if not st.session_state.get('analyzed', False):
+            # TOMBOL ANALISIS - BESAR & JELAS
+            analyze_button = st.button(
+                "🔍 ANALISIS REKAMAN & VERIFIKASI SPEAKER", 
+                type="primary", 
+                use_container_width=True,
+                key="btn_analyze_recording"
+            )
+            
+            if analyze_button:
                 with st.spinner("🔄 Menganalisis rekaman & memverifikasi speaker..."):
                     try:
                         # Load audio from bytes
@@ -514,9 +518,6 @@ with tab2:
                             # Speaker Verification
                             is_authorized = speaker in AUTHORIZED_SPEAKERS
                             is_confident = confidence is None or confidence >= CONFIDENCE_THRESHOLD
-                            
-                            # Mark as analyzed
-                            st.session_state.analyzed = True
                             
                             # Tampilkan hasil
                             st.success("✅ Analisis Selesai!")
@@ -602,14 +603,7 @@ with tab2:
                         st.error(f"❌ Error: {str(e)}")
                         import traceback
                         st.code(traceback.format_exc())
-                        st.session_state.analyzed = True  # Mark as analyzed even on error
         else:
-            # Reset state saat tidak ada audio
-            if 'last_audio' in st.session_state:
-                del st.session_state.last_audio
-            if 'analyzed' in st.session_state:
-                del st.session_state.analyzed
-            
             # Tampilkan tips saat belum merekam
             st.info(f"""
             **👥 Authorized Speakers:**
@@ -620,9 +614,6 @@ with tab2:
             - Ucapan jelas & keras
             - Durasi 1-3 detik
             - Confidence ≥ {CONFIDENCE_THRESHOLD}%
-            
-            **🎯 Fitur Auto-Analyze:**
-            Analisis otomatis setelah rekaman selesai!
             """)
     
     except ImportError:
