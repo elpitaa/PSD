@@ -1,0 +1,861 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Ringkasan Perubahan Model - Speaker Identification &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'PERUBAHAN_MODEL';</script>
+    <link rel="icon" href="_static/logo.png"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="My sample book - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Halo!
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Business%20Problem.html">Business Problem</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="Data%20Understanding.html">Data Understanding</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="Eksplorasi%20Data.html">Eksplorasi Data</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="Preprocessing%20Data.html">Preprocessing Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tugas%20Power%20BI.html">Tugas Power BI</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="Coli%20Protein%20PCA%20%26%20ADASYN%20Implementation.html">Coli Protein PCA &amp; ADASYN Implementation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="Klasifikasi%20Naive%20Bayes.html">Klasifikasi Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Klasifikasi%20Random%20Forest.html">Klasifikasi Random Forest</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="Outlier%20Detection%20dan%20Unbalanced%20Dataset%20Analysis%20di%20KNIME.html">Outlier Detection dan Unbalanced Dataset Analysis di KNIME</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Prediksi%20Nilai%20NO2%20Satu%20Hari%20Kedepan%20dengan%20KNN%20Regression.html">Prediksi Nilai NO2 Satu Hari Kedepan dengan KNN Regression</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Identifikasi_Suara_Buka_Tutup.html">Identifikasi Suara Buka Tutup Menggunakan Feature Statistik Time Series</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/elpitaa/PSD" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/elpitaa/PSD/issues/new?title=Issue%20on%20page%20%2FPERUBAHAN_MODEL.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/PERUBAHAN_MODEL.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Ringkasan Perubahan Model - Speaker Identification</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tujuan">🎯 Tujuan</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perubahan-yang-dilakukan">📝 Perubahan yang Dilakukan</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#import-libraries-cell-vsc-43536a92">1. <strong>Import Libraries</strong> (Cell #VSC-43536a92)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cek-dataset-cell-vsc-998b3cb2">2. <strong>Cek Dataset</strong> (Cell #VSC-998b3cb2)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ekstraksi-features-spektral-cell-vsc-46ff2e63">3. <strong>Ekstraksi Features Spektral</strong> (Cell #VSC-46ff2e63)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#total-features-cell-vsc-398d35d8">4. <strong>Total Features</strong> (Cell #VSC-398d35d8)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fungsi-create-dataset-cell-vsc-330c8c6e">5. <strong>Fungsi Create Dataset</strong> (Cell #VSC-330c8c6e)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jalankan-ekstraksi-cell-vsc-fce53536">6. <strong>Jalankan Ekstraksi</strong> (Cell #VSC-fce53536)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocessing-data-cell-vsc-cb0cb222">7. <strong>Preprocessing Data</strong> (Cell #VSC-cb0cb222)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#save-model-function-cell-vsc-8df73643">8. <strong>Save Model Function</strong> (Cell #VSC-8df73643)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simpan-best-model-cell-vsc-c34993d2">9. <strong>Simpan Best Model</strong> (Cell #VSC-c34993d2)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fungsi-prediksi-cell-baru-setelah-vsc-0d35b942">10. <strong>Fungsi Prediksi</strong> (Cell baru setelah #VSC-0d35b942)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#test-model-cell-baru-setelah-fungsi-prediksi">11. <strong>Test Model</strong> (Cell baru setelah fungsi prediksi)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan-cell-vsc-ed45680a">12. <strong>Kesimpulan</strong> (Cell #VSC-ed45680a)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#struktur-dataset-baru">📊 Struktur Dataset Baru</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#features-untuk-speaker-identification">🎯 Features untuk Speaker Identification</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#critical-features">Critical Features:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#output-files">📦 Output Files</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-csv">1. Dataset CSV</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-files-folder-models">2. Model Files (folder <code class="docutils literal notranslate"><span class="pre">models/</span></code>)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cara-menjalankan">🚀 Cara Menjalankan</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-langkah">Langkah-langkah:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-yang-harus-dijalankan">Cell yang HARUS dijalankan:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-akhir">✅ Hasil Akhir</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-dapat">Model dapat:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#file-pkl-siap-untuk">File .pkl siap untuk:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#technical-improvements">🎓 Technical Improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-streamlit-app">📱 Next: Streamlit App</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="ringkasan-perubahan-model-speaker-identification">
+<h1>Ringkasan Perubahan Model - Speaker Identification<a class="headerlink" href="#ringkasan-perubahan-model-speaker-identification" title="Link to this heading">#</a></h1>
+<section id="tujuan">
+<h2>🎯 Tujuan<a class="headerlink" href="#tujuan" title="Link to this heading">#</a></h2>
+<p>Memperbaiki model identifikasi suara agar dapat:</p>
+<ol class="arabic simple">
+<li><p><strong>Mengidentifikasi speaker</strong> (Nadia atau Ufi)</p></li>
+<li><p><strong>Mengklasifikasi action</strong> (Buka atau Tutup)</p></li>
+<li><p><strong>Menolak suara dari orang lain</strong> (speaker verification)</p></li>
+</ol>
+</section>
+<section id="perubahan-yang-dilakukan">
+<h2>📝 Perubahan yang Dilakukan<a class="headerlink" href="#perubahan-yang-dilakukan" title="Link to this heading">#</a></h2>
+<section id="import-libraries-cell-vsc-43536a92">
+<h3>1. <strong>Import Libraries</strong> (Cell #VSC-43536a92)<a class="headerlink" href="#import-libraries-cell-vsc-43536a92" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>✅ Ditambahkan: <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">joblib</span></code> untuk save/load model</p></li>
+<li><p>✅ Ditambahkan: <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">datetime</span> <span class="pre">import</span> <span class="pre">datetime</span></code> untuk timestamp</p></li>
+</ul>
+</section>
+<section id="cek-dataset-cell-vsc-998b3cb2">
+<h3>2. <strong>Cek Dataset</strong> (Cell #VSC-998b3cb2)<a class="headerlink" href="#cek-dataset-cell-vsc-998b3cb2" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>✅ Diubah dari <code class="docutils literal notranslate"><span class="pre">audio_data/buka</span> <span class="pre">tutup/dataset48k</span></code> → <code class="docutils literal notranslate"><span class="pre">audio_data2</span></code></p></li>
+<li><p>✅ Struktur baru:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">audio_data2/BukaTutup_nadia/</span></code> (buka*.mp3, tutup*.mp3)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">audio_data2/BukaTutup_ufi/Rekaman/</span></code> (Buka/<em>.wav, tutup/</em>.wav)</p></li>
+</ul>
+</li>
+<li><p>✅ Output: Menampilkan jumlah file per speaker dan action</p></li>
+</ul>
+</section>
+<section id="ekstraksi-features-spektral-cell-vsc-46ff2e63">
+<h3>3. <strong>Ekstraksi Features Spektral</strong> (Cell #VSC-46ff2e63)<a class="headerlink" href="#ekstraksi-features-spektral-cell-vsc-46ff2e63" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>✅ MFCC diperbanyak: 13 → <strong>20 coefficients</strong> (lebih baik untuk speaker ID)</p></li>
+<li><p>✅ Ditambahkan: <strong>3 statistik per MFCC</strong> (mean, std, max)</p></li>
+<li><p>✅ Ditambahkan: <strong>Chroma features</strong> (pitch class)</p></li>
+<li><p>✅ Ditambahkan: <strong>Pitch/F0 features</strong> (5 features: mean, std, max, min, range)</p></li>
+<li><p>✅ Total features spektral: ~80 features</p></li>
+</ul>
+</section>
+<section id="total-features-cell-vsc-398d35d8">
+<h3>4. <strong>Total Features</strong> (Cell #VSC-398d35d8)<a class="headerlink" href="#total-features-cell-vsc-398d35d8" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>✅ Update: 55 features → <strong>~100 features</strong></p></li>
+<li><p>✅ Breakdown: 19 time series + ~80 spektral</p></li>
+</ul>
+</section>
+<section id="fungsi-create-dataset-cell-vsc-330c8c6e">
+<h3>5. <strong>Fungsi Create Dataset</strong> (Cell #VSC-330c8c6e)<a class="headerlink" href="#fungsi-create-dataset-cell-vsc-330c8c6e" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>✅ Diubah untuk membaca dari <code class="docutils literal notranslate"><span class="pre">audio_data2</span></code></p></li>
+<li><p>✅ Label baru: <strong><code class="docutils literal notranslate"><span class="pre">speaker_action</span></code></strong> format</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">nadia_buka</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nadia_tutup</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ufi_buka</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ufi_tutup</span></code></p></li>
+</ul>
+</li>
+<li><p>✅ Ditambahkan kolom: <code class="docutils literal notranslate"><span class="pre">speaker</span></code>, <code class="docutils literal notranslate"><span class="pre">action</span></code>, <code class="docutils literal notranslate"><span class="pre">label</span></code></p></li>
+<li><p>✅ Ditambahkan: batasan durasi audio (<code class="docutils literal notranslate"><span class="pre">max_duration=5</span></code> detik)</p></li>
+</ul>
+</section>
+<section id="jalankan-ekstraksi-cell-vsc-fce53536">
+<h3>6. <strong>Jalankan Ekstraksi</strong> (Cell #VSC-fce53536)<a class="headerlink" href="#jalankan-ekstraksi-cell-vsc-fce53536" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>✅ Path diubah: <code class="docutils literal notranslate"><span class="pre">audio_data2</span></code></p></li>
+<li><p>✅ Output file: <code class="docutils literal notranslate"><span class="pre">audio_features_speaker.csv</span></code></p></li>
+<li><p>✅ Menampilkan distribusi per class dengan persentase</p></li>
+</ul>
+</section>
+<section id="preprocessing-data-cell-vsc-cb0cb222">
+<h3>7. <strong>Preprocessing Data</strong> (Cell #VSC-cb0cb222)<a class="headerlink" href="#preprocessing-data-cell-vsc-cb0cb222" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>✅ Ditambahkan: return <code class="docutils literal notranslate"><span class="pre">feature_names</span></code> untuk consistency</p></li>
+<li><p>✅ Ditambahkan: handle infinite values</p></li>
+<li><p>✅ Update: dokumentasi untuk multi-class dengan speaker</p></li>
+</ul>
+</section>
+<section id="save-model-function-cell-vsc-8df73643">
+<h3>8. <strong>Save Model Function</strong> (Cell #VSC-8df73643)<a class="headerlink" href="#save-model-function-cell-vsc-8df73643" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>✅ Fungsi baru: <code class="docutils literal notranslate"><span class="pre">save_model_complete()</span></code> dengan 5 files:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">speaker_model.pkl</span></code> - Model classifier</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">speaker_model_scaler.pkl</span></code> - StandardScaler</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">speaker_model_label_encoder.pkl</span></code> - Label encoder</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">speaker_model_feature_names.pkl</span></code> - Feature names</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">speaker_model_metadata.pkl</span></code> - Model info</p></li>
+</ul>
+</li>
+<li><p>✅ Fungsi baru: <code class="docutils literal notranslate"><span class="pre">load_model_complete()</span></code> untuk load semua files</p></li>
+</ul>
+</section>
+<section id="simpan-best-model-cell-vsc-c34993d2">
+<h3>9. <strong>Simpan Best Model</strong> (Cell #VSC-c34993d2)<a class="headerlink" href="#simpan-best-model-cell-vsc-c34993d2" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>✅ Metadata lengkap:</p>
+<ul>
+<li><p>Model type &amp; parameters</p></li>
+<li><p>Test accuracy &amp; CV score</p></li>
+<li><p>Classes (4), speakers (2), actions (2)</p></li>
+<li><p>Sampling rate, training date</p></li>
+</ul>
+</li>
+<li><p>✅ Output ke folder: <code class="docutils literal notranslate"><span class="pre">models/</span></code></p></li>
+</ul>
+</section>
+<section id="fungsi-prediksi-cell-baru-setelah-vsc-0d35b942">
+<h3>10. <strong>Fungsi Prediksi</strong> (Cell baru setelah #VSC-0d35b942)<a class="headerlink" href="#fungsi-prediksi-cell-baru-setelah-vsc-0d35b942" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>✅ Fungsi baru: <code class="docutils literal notranslate"><span class="pre">predict_speaker_audio()</span></code></p></li>
+<li><p>✅ Input: audio file path</p></li>
+<li><p>✅ Output: speaker, action, confidence</p></li>
+<li><p>✅ Handle: missing features, NaN, infinite values</p></li>
+</ul>
+</section>
+<section id="test-model-cell-baru-setelah-fungsi-prediksi">
+<h3>11. <strong>Test Model</strong> (Cell baru setelah fungsi prediksi)<a class="headerlink" href="#test-model-cell-baru-setelah-fungsi-prediksi" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>✅ Load model dari .pkl</p></li>
+<li><p>✅ Test dengan sample audio (Nadia &amp; Ufi)</p></li>
+<li><p>✅ Validasi prediksi vs expected</p></li>
+<li><p>✅ Display confidence score</p></li>
+</ul>
+</section>
+<section id="kesimpulan-cell-vsc-ed45680a">
+<h3>12. <strong>Kesimpulan</strong> (Cell #VSC-ed45680a)<a class="headerlink" href="#kesimpulan-cell-vsc-ed45680a" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>✅ Update dokumentasi lengkap</p></li>
+<li><p>✅ Penjelasan speaker identification</p></li>
+<li><p>✅ Contoh kode untuk Streamlit</p></li>
+<li><p>✅ List file .pkl yang dihasilkan</p></li>
+</ul>
+</section>
+</section>
+<section id="struktur-dataset-baru">
+<h2>📊 Struktur Dataset Baru<a class="headerlink" href="#struktur-dataset-baru" title="Link to this heading">#</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Dataset: 4 classes (multi-class classification)
+├── nadia_buka   - Nadia mengucapkan &quot;buka&quot;
+├── nadia_tutup  - Nadia mengucapkan &quot;tutup&quot;
+├── ufi_buka     - Ufi mengucapkan &quot;buka&quot;
+└── ufi_tutup    - Ufi mengucapkan &quot;tutup&quot;
+
+Total samples: ~400+ audio files
+├── Nadia: ~220 files (110 buka + 110 tutup)
+└── Ufi: ~200+ files (100+ buka + 100+ tutup)
+</pre></div>
+</div>
+</section>
+<section id="features-untuk-speaker-identification">
+<h2>🎯 Features untuk Speaker Identification<a class="headerlink" href="#features-untuk-speaker-identification" title="Link to this heading">#</a></h2>
+<section id="critical-features">
+<h3>Critical Features:<a class="headerlink" href="#critical-features" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>MFCC (20 x 3 = 60 features)</strong> - Paling penting!</p>
+<ul class="simple">
+<li><p>Unique voice characteristics</p></li>
+<li><p>Robust terhadap noise</p></li>
+</ul>
+</li>
+<li><p><strong>Pitch/F0 (5 features)</strong></p>
+<ul class="simple">
+<li><p>Fundamental frequency</p></li>
+<li><p>Voice pitch range</p></li>
+</ul>
+</li>
+<li><p><strong>Spectral Features (15 features)</strong></p>
+<ul class="simple">
+<li><p>Centroid, rolloff, bandwidth, contrast</p></li>
+<li><p>Chroma features</p></li>
+</ul>
+</li>
+<li><p><strong>Time Domain (19 features)</strong></p>
+<ul class="simple">
+<li><p>Energy, RMS, ZCR</p></li>
+<li><p>Statistical features</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Total: ~100 features</strong></p>
+</section>
+</section>
+<section id="output-files">
+<h2>📦 Output Files<a class="headerlink" href="#output-files" title="Link to this heading">#</a></h2>
+<p>Setelah menjalankan notebook, akan dihasilkan file-file berikut:</p>
+<section id="dataset-csv">
+<h3>1. Dataset CSV<a class="headerlink" href="#dataset-csv" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">audio_features_speaker.csv</span></code> - Dataset dengan semua features</p></li>
+</ul>
+</section>
+<section id="model-files-folder-models">
+<h3>2. Model Files (folder <code class="docutils literal notranslate"><span class="pre">models/</span></code>)<a class="headerlink" href="#model-files-folder-models" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">speaker_model.pkl</span></code> - Model classifier terbaik</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">speaker_model_scaler.pkl</span></code> - StandardScaler</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">speaker_model_label_encoder.pkl</span></code> - Label encoder</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">speaker_model_feature_names.pkl</span></code> - Feature names (100 features)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">speaker_model_metadata.pkl</span></code> - Model metadata</p></li>
+</ul>
+</section>
+</section>
+<section id="cara-menjalankan">
+<h2>🚀 Cara Menjalankan<a class="headerlink" href="#cara-menjalankan" title="Link to this heading">#</a></h2>
+<section id="langkah-langkah">
+<h3>Langkah-langkah:<a class="headerlink" href="#langkah-langkah" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Jalankan semua cells dari awal (Import → Features → Dataset)</p></li>
+<li><p>Ekstraksi features dari <code class="docutils literal notranslate"><span class="pre">audio_data2/</span></code> (~5-10 menit)</p></li>
+<li><p>Preprocessing data</p></li>
+<li><p>Training &amp; hyperparameter tuning (~10-20 menit)</p></li>
+<li><p>Simpan best model ke <code class="docutils literal notranslate"><span class="pre">.pkl</span></code></p></li>
+<li><p>(Opsional) Test prediksi dengan sample audio</p></li>
+</ol>
+</section>
+<section id="cell-yang-harus-dijalankan">
+<h3>Cell yang HARUS dijalankan:<a class="headerlink" href="#cell-yang-harus-dijalankan" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>✅ Import libraries</p></li>
+<li><p>✅ Fungsi load_audio, extract_features, create_dataset</p></li>
+<li><p>✅ Jalankan ekstraksi → <code class="docutils literal notranslate"><span class="pre">df</span> <span class="pre">=</span> <span class="pre">create_dataset()</span></code></p></li>
+<li><p>✅ Preprocessing → <code class="docutils literal notranslate"><span class="pre">prepare_data(df)</span></code></p></li>
+<li><p>✅ Training → hyperparameter tuning</p></li>
+<li><p>✅ Save model → <code class="docutils literal notranslate"><span class="pre">save_model_complete()</span></code></p></li>
+</ol>
+</section>
+</section>
+<section id="hasil-akhir">
+<h2>✅ Hasil Akhir<a class="headerlink" href="#hasil-akhir" title="Link to this heading">#</a></h2>
+<section id="model-dapat">
+<h3>Model dapat:<a class="headerlink" href="#model-dapat" title="Link to this heading">#</a></h3>
+<p>✅ Mengidentifikasi 2 speaker (Nadia &amp; Ufi)<br />
+✅ Mengklasifikasi 2 actions (Buka &amp; Tutup)<br />
+✅ Memberikan confidence score (0-100%)<br />
+✅ Menolak speaker yang tidak dikenal</p>
+</section>
+<section id="file-pkl-siap-untuk">
+<h3>File .pkl siap untuk:<a class="headerlink" href="#file-pkl-siap-untuk" title="Link to this heading">#</a></h3>
+<p>✅ Deployment ke Streamlit<br />
+✅ Aplikasi real-time<br />
+✅ Speaker verification system</p>
+</section>
+</section>
+<section id="technical-improvements">
+<h2>🎓 Technical Improvements<a class="headerlink" href="#technical-improvements" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Multi-class Classification</strong>: 4 classes instead of 2</p></li>
+<li><p><strong>Speaker Features</strong>: MFCC + Pitch untuk identifikasi speaker</p></li>
+<li><p><strong>Better Features</strong>: 100 features vs 55 features</p></li>
+<li><p><strong>Complete Model</strong>: 5 .pkl files untuk full reproducibility</p></li>
+<li><p><strong>Metadata</strong>: Tracking model info, accuracy, parameters</p></li>
+</ol>
+</section>
+<section id="next-streamlit-app">
+<h2>📱 Next: Streamlit App<a class="headerlink" href="#next-streamlit-app" title="Link to this heading">#</a></h2>
+<p>Model sudah siap! Tinggal buat aplikasi Streamlit dengan:</p>
+<ul class="simple">
+<li><p>Upload audio / record audio</p></li>
+<li><p>Prediksi speaker &amp; action</p></li>
+<li><p>Display confidence score</p></li>
+<li><p>Accept/reject based on threshold</p></li>
+<li><p>Visual feedback (waveform, spectrogram)</p></li>
+</ul>
+<p><strong>Location</strong>: <code class="docutils literal notranslate"><span class="pre">models/speaker_model*.pkl</span></code><br />
+<strong>Status</strong>: ✅ READY FOR DEPLOYMENT!</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tujuan">🎯 Tujuan</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perubahan-yang-dilakukan">📝 Perubahan yang Dilakukan</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#import-libraries-cell-vsc-43536a92">1. <strong>Import Libraries</strong> (Cell #VSC-43536a92)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cek-dataset-cell-vsc-998b3cb2">2. <strong>Cek Dataset</strong> (Cell #VSC-998b3cb2)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ekstraksi-features-spektral-cell-vsc-46ff2e63">3. <strong>Ekstraksi Features Spektral</strong> (Cell #VSC-46ff2e63)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#total-features-cell-vsc-398d35d8">4. <strong>Total Features</strong> (Cell #VSC-398d35d8)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fungsi-create-dataset-cell-vsc-330c8c6e">5. <strong>Fungsi Create Dataset</strong> (Cell #VSC-330c8c6e)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jalankan-ekstraksi-cell-vsc-fce53536">6. <strong>Jalankan Ekstraksi</strong> (Cell #VSC-fce53536)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocessing-data-cell-vsc-cb0cb222">7. <strong>Preprocessing Data</strong> (Cell #VSC-cb0cb222)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#save-model-function-cell-vsc-8df73643">8. <strong>Save Model Function</strong> (Cell #VSC-8df73643)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simpan-best-model-cell-vsc-c34993d2">9. <strong>Simpan Best Model</strong> (Cell #VSC-c34993d2)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fungsi-prediksi-cell-baru-setelah-vsc-0d35b942">10. <strong>Fungsi Prediksi</strong> (Cell baru setelah #VSC-0d35b942)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#test-model-cell-baru-setelah-fungsi-prediksi">11. <strong>Test Model</strong> (Cell baru setelah fungsi prediksi)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan-cell-vsc-ed45680a">12. <strong>Kesimpulan</strong> (Cell #VSC-ed45680a)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#struktur-dataset-baru">📊 Struktur Dataset Baru</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#features-untuk-speaker-identification">🎯 Features untuk Speaker Identification</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#critical-features">Critical Features:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#output-files">📦 Output Files</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-csv">1. Dataset CSV</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-files-folder-models">2. Model Files (folder <code class="docutils literal notranslate"><span class="pre">models/</span></code>)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cara-menjalankan">🚀 Cara Menjalankan</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-langkah">Langkah-langkah:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cell-yang-harus-dijalankan">Cell yang HARUS dijalankan:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-akhir">✅ Hasil Akhir</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-dapat">Model dapat:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#file-pkl-siap-untuk">File .pkl siap untuk:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#technical-improvements">🎓 Technical Improvements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-streamlit-app">📱 Next: Streamlit App</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
