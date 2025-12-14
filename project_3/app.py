@@ -416,69 +416,76 @@ def main():
         # Load test data
         # @st.cache_data  # Temporarily disabled for deployment debugging
         def load_test_data(base_dir):
-                import os
-                """Load test dataset with error handling for production"""
-                # Check if test data exists
-                test_data_path = os.path.join(base_dir, 'data', 'Test_Arabic_Digit.txt')
-                
-                if not os.path.exists(test_data_path):
-                    st.error(f"File test data tidak ditemukan di: {test_data_path}")
-                    st.info("Silakan gunakan fitur 'Upload Audio' atau 'Rekam Audio'.")
-                    return None, None
-                
-                def parse_file(filepath, blocks_per_digit):
-                    sequences = []
-                    current_sequence = []
-                    
-                    with open(filepath, 'r') as f:
-                        for line in f:
-                            line = line.strip()
-                            if not line:
-                                if len(current_sequence) > 0:
-                                    sequences.append(np.array(current_sequence))
-                                    current_sequence = []
-                                continue
-                            try:
-                                values = [float(x) for x in line.split()]
-                                if len(values) == 13:
-                                    current_sequence.append(values)
-                            except:
-                                pass
-                    
-                    if len(current_sequence) > 0:
-                        sequences.append(np.array(current_sequence))
-                    
-                    labels = []
-                    for digit in range(10):
-                        labels.extend([digit] * blocks_per_digit)
-                    
-                    return sequences, np.array(labels[:len(sequences)])
-                
-                X_test_raw, y_test = parse_file(test_data_path, blocks_per_digit=220)
-                
-                # Pad sequences
-                def pad_sequences(X, max_len):
-                    X_padded = []
-                    for x in X:
-                        if x.shape[0] < max_len:
-                            pad_width = max_len - x.shape[0]
-                            x_padded = np.pad(x, ((0, pad_width), (0, 0)), mode='constant')
-                        else:
-                            x_padded = x[:max_len, :]
-                        X_padded.append(x_padded)
-                    return np.array(X_padded)
-                
-                X_test = pad_sequences(X_test_raw, 93)
-                return X_test, y_test
+            import os
+            """Load test dataset with error handling for production"""
+            # Check if test data exists
+            test_data_path = os.path.join(base_dir, 'data', 'Test_Arabic_Digit.txt')
             
-            X_test, y_test = load_test_data(BASE_DIR)
+            if not os.path.exists(test_data_path):
+                st.error(f"File test data tidak ditemukan di: {test_data_path}")
+                st.info("Silakan periksa file data.")
+                return None, None
             
-            # Skip this tab if test data not available
-            if X_test is None:
+            def parse_file(filepath, blocks_per_digit):
+                sequences = []
+                current_sequence = []
+                
+                with open(filepath, 'r') as f:
+                    for line in f:
+                        line = line.strip()
+                        if not line:
+                            if len(current_sequence) > 0:
+                                sequences.append(np.array(current_sequence))
+                                current_sequence = []
+                            continue
+                        try:
+                            values = [float(x) for x in line.split()]
+                            if len(values) == 13:
+                                current_sequence.append(values)
+                        except:
+                            pass
+                
+                if len(current_sequence) > 0:
+                    sequences.append(np.array(current_sequence))
+                
+                labels = []
+                for digit in range(10):
+                    labels.extend([digit] * blocks_per_digit)
+                
+                return sequences, np.array(labels[:len(sequences)])
+            
+            X_test_raw, y_test = parse_file(test_data_path, blocks_per_digit=220)
+            
+            # Pad sequences
+            def pad_sequences(X, max_len):
+                X_padded = []
+                for x in X:
+                    if x.shape[0] < max_len:
+                        pad_width = max_len - x.shape[0]
+                        x_padded = np.pad(x, ((0, pad_width), (0, 0)), mode='constant')
+                    else:
+                        x_padded = x[:max_len, :]
+                    X_padded.append(x_padded)
+                return np.array(X_padded)
+            
+            X_test = pad_sequences(X_test_raw, 93)
+            return X_test, y_test
+        
+        X_test, y_test = load_test_data(BASE_DIR)
+        
+        # Skip this tab if test data not available
+        if X_test is None:
             st.warning("Dataset tidak dapat dimuat. Silakan periksa file data.")
-            
-            # Calculate index
-            test_idx = selected_digit * 220 + (sample_number - 1)
+            st.stop()
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            selected_digit = st.selectbox("Pilih Digit (0-9)", range(10))
+        with col2:
+            sample_number = st.selectbox("Pilih Sample Number", range(1, 221))
+        
+        # Calculate index
+        test_idx = selected_digit * 220 + (sample_number - 1)
             
             st.markdown(f"""
                 **Sample Info:**
