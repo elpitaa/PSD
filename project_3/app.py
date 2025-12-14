@@ -119,20 +119,27 @@ def extract_mfcc(audio_data, sr, n_mfcc=13, max_length=93):
 def predict_digit(model, audio_features, scaler=None):
     """Melakukan prediksi digit dari fitur audio"""
     try:
-        # Normalisasi dengan scaler
-        if scaler is not None:
-            normalized_features = scaler.transform(audio_features)
-        else:
-            normalized_features = audio_features
-        
         # Cek apakah model adalah SVM (sklearn) atau Keras model
         if hasattr(model, 'predict_proba'):  # SVM/sklearn model
             # Flatten features untuk SVM (harus 1D per sample)
-            features = normalized_features.flatten().reshape(1, -1)
-            predictions = model.predict_proba(features)[0]
-            predicted_class = model.predict(features)[0]
+            features_flat = audio_features.flatten().reshape(1, -1)
+            
+            # Normalisasi dengan scaler
+            if scaler is not None:
+                normalized_features = scaler.transform(features_flat)
+            else:
+                normalized_features = features_flat
+            
+            predictions = model.predict_proba(normalized_features)[0]
+            predicted_class = model.predict(normalized_features)[0]
             confidence = predictions[predicted_class]
         else:  # Keras/Deep Learning model
+            # Normalisasi dengan scaler
+            if scaler is not None:
+                normalized_features = scaler.transform(audio_features)
+            else:
+                normalized_features = audio_features
+            
             # Reshape untuk input model (batch_size, timesteps, features)
             features = normalized_features.reshape(1, normalized_features.shape[0], normalized_features.shape[1])
             predictions = model.predict(features, verbose=0)
