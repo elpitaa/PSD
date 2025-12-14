@@ -411,6 +411,7 @@ def main():
             # Load test data
             # @st.cache_data  # Temporarily disabled for deployment debugging
             def load_test_data(base_dir):
+                import os
                 """Load test dataset with error handling for production"""
                 # Check if test data exists
                 test_data_path = os.path.join(base_dir, 'data', 'Test_Arabic_Digit.txt')
