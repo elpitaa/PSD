@@ -40,36 +40,44 @@ st.set_page_config(
 @st.cache_resource(show_spinner=False)
 def load_model_and_metadata():
     """Memuat model, scaler, dan metadata dengan error handling"""
-    with st.spinner('🔄 Loading model and resources...'):
+    with st.spinner('Loading model and resources...'):
         model = None
         scaler = None
         metadata = None
         
         try:
+            # Get directory where app.py is located
+            BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+            
             # Memuat metadata
-            if os.path.exists('model_metadata.json'):
-                with open('model_metadata.json', 'r') as f:
+            metadata_path = os.path.join(BASE_DIR, 'model_metadata.json')
+            if os.path.exists(metadata_path):
+                with open(metadata_path, 'r') as f:
                     metadata = json.load(f)
             else:
-                st.error("File model_metadata.json tidak ditemukan!")
+                st.error(f"File model_metadata.json tidak ditemukan di {BASE_DIR}!")
                 return None, None, None
             
             # Memuat model (coba .h5 dulu, kalau ga ada coba .pkl)
-            if os.path.exists('best_model.h5'):
-                model = keras.models.load_model('best_model.h5')
-            elif os.path.exists('best_model.pkl'):
-                with open('best_model.pkl', 'rb') as f:
+            model_h5_path = os.path.join(BASE_DIR, 'best_model.h5')
+            model_pkl_path = os.path.join(BASE_DIR, 'best_model.pkl')
+            
+            if os.path.exists(model_h5_path):
+                model = keras.models.load_model(model_h5_path)
+            elif os.path.exists(model_pkl_path):
+                with open(model_pkl_path, 'rb') as f:
                     model = pickle.load(f)
             else:
-                st.error("File model tidak ditemukan!")
+                st.error(f"File model tidak ditemukan di {BASE_DIR}!")
                 return None, None, None
             
             # Memuat scaler
-            if os.path.exists('scaler.pkl'):
-                with open('scaler.pkl', 'rb') as f:
+            scaler_path = os.path.join(BASE_DIR, 'scaler.pkl')
+            if os.path.exists(scaler_path):
+                with open(scaler_path, 'rb') as f:
                     scaler = pickle.load(f)
             else:
-                st.warning("File scaler.pkl tidak ditemukan. Prediksi mungkin tidak akurat!")
+                st.warning(f"File scaler.pkl tidak ditemukan di {BASE_DIR}. Prediksi mungkin tidak akurat!")
             
             return model, scaler, metadata
             
@@ -421,7 +429,11 @@ def main():
                     
                     return sequences, np.array(labels[:len(sequences)])
                 
-                X_test_raw, y_test = parse_file('../tugas/data/Test_Arabic_Digit.txt', blocks_per_digit=220)
+                # Get path to test data (relative to app.py location)
+                BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+                test_data_path = os.path.join(BASE_DIR, '..', 'tugas', 'data', 'Test_Arabic_Digit.txt')
+                
+                X_test_raw, y_test = parse_file(test_data_path, blocks_per_digit=220)
                 
                 # Pad sequences
                 def pad_sequences(X, max_len):
