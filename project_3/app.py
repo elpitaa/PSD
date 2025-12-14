@@ -435,7 +435,7 @@ def main():
                     return sequences, np.array(labels[:len(sequences)])
                 
                 # Use passed base_dir for test data path
-                test_data_path = os.path.join(base_dir, '..', 'tugas', 'data', 'Test_Arabic_Digit.txt')
+                test_data_path = os.path.join(base_dir, 'data', 'Test_Arabic_Digit.txt')
                 
                 X_test_raw, y_test = parse_file(test_data_path, blocks_per_digit=220)
                 
