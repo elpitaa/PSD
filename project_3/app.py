@@ -404,8 +404,17 @@ def main():
             st.info("Pilih sample dari test dataset untuk melihat prediksi yang akurat")
             
             # Load test data
-            @st.cache_data
+            # @st.cache_data  # Temporarily disabled for deployment debugging
             def load_test_data(base_dir):
+                """Load test dataset with error handling for production"""
+                # Check if test data exists
+                test_data_path = os.path.join(base_dir, 'data', 'Test_Arabic_Digit.txt')
+                
+                if not os.path.exists(test_data_path):
+                    st.error(f"File test data tidak ditemukan di: {test_data_path}")
+                    st.info("Silakan gunakan fitur 'Upload Audio' atau 'Rekam Audio'.")
+                    return None, None
+                
                 def parse_file(filepath, blocks_per_digit):
                     sequences = []
                     current_sequence = []
@@ -434,9 +443,6 @@ def main():
                     
                     return sequences, np.array(labels[:len(sequences)])
                 
-                # Use passed base_dir for test data path
-                test_data_path = os.path.join(base_dir, 'data', 'Test_Arabic_Digit.txt')
-                
                 X_test_raw, y_test = parse_file(test_data_path, blocks_per_digit=220)
                 
                 # Pad sequences
@@ -455,6 +461,11 @@ def main():
                 return X_test, y_test
             
             X_test, y_test = load_test_data(BASE_DIR)
+            
+            # Skip this tab if test data not available
+            if X_test is None:
+                st.warning("Tab ini memerlukan test dataset untuk berfungsi.")
+                st.stop()
             
             col1, col2 = st.columns(2)
             with col1:
