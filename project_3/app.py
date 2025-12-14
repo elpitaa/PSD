@@ -307,7 +307,7 @@ def main():
             st.markdown("""
                 <div class="metric-card">
                     <h3 style="color: #333;">Akurasi Model</h3>
-                    <h1 style="color: #007bff;">98.8%</h1>
+                    <h1 style="color: #007bff;">97.2%</h1>
                     <p>Test Accuracy</p>
                 </div>
             """, unsafe_allow_html=True)
@@ -359,7 +359,7 @@ def main():
                         <li>Visualisasi waveform & MFCC</li>
                         <li>Probability distribution chart</li>
                         <li>Confidence score real-time</li>
-                        <li>Akurasi 98.8% (Test set)</li>
+                        <li>Akurasi 97.2% (Test set)</li>
                     </ul>
                 </div>
             """, unsafe_allow_html=True)
