@@ -2,21 +2,26 @@
 Arabic Digit Recognition - Streamlit Application
 Aplikasi pengenalan digit berbahasa Arab (0-9) dari rekaman suara
 Menggunakan Deep Learning (1D CNN/LSTM) dengan MFCC features
+Version: 1.0.1
 """
 
-import streamlit as st
-import numpy as np
-import librosa
+# Standard library imports
+import os
+import io
 import json
 import pickle
-from tensorflow import keras
-import io
-import os
+import warnings
+from datetime import datetime
+
+# Third-party imports
+import streamlit as st
+import numpy as np
 import pandas as pd
+import librosa
+from tensorflow import keras
 import plotly.graph_objects as go
 import plotly.express as px
-from datetime import datetime
-import warnings
+
 warnings.filterwarnings('ignore')
 
 # ========================================
