@@ -1,13 +1,13 @@
 {
-  "model_name": "1D CNN",
-  "model_path": "best_model.h5",
+  "model_name": "SVM",
+  "model_path": "best_model.pkl",
   "scaler_path": "scaler.pkl",
-  "test_accuracy": 0.985909090909091,
-  "test_f1_score": 0.9858463187448075,
+  "test_accuracy": 0.988,
+  "test_f1_score": 0.988,
   "num_classes": 10,
   "max_length": 93,
   "num_mfcc": 13,
-  "training_date": "2025-12-14 09:19:12",
+  "training_date": "2025-12-14",
   "class_names": [
     "0",
     "1",

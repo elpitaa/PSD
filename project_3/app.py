@@ -68,15 +68,15 @@ def load_model_and_metadata():
                 st.error(f"File model_metadata.json tidak ditemukan di {BASE_DIR}!")
                 return None, None, None
             
-            # Memuat model (coba .h5 dulu, kalau ga ada coba .pkl)
-            model_h5_path = os.path.join(BASE_DIR, 'best_model.h5')
+            # Memuat model (prioritas SVM .pkl, fallback ke .h5)
             model_pkl_path = os.path.join(BASE_DIR, 'best_model.pkl')
+            model_h5_path = os.path.join(BASE_DIR, 'best_model.h5')
             
-            if os.path.exists(model_h5_path):
-                model = keras.models.load_model(model_h5_path)
-            elif os.path.exists(model_pkl_path):
+            if os.path.exists(model_pkl_path):
                 with open(model_pkl_path, 'rb') as f:
                     model = pickle.load(f)
+            elif os.path.exists(model_h5_path):
+                model = keras.models.load_model(model_h5_path)
             else:
                 st.error(f"File model tidak ditemukan di {BASE_DIR}!")
                 return None, None, None
@@ -119,21 +119,27 @@ def extract_mfcc(audio_data, sr, n_mfcc=13, max_length=93):
 def predict_digit(model, audio_features, scaler=None):
     """Melakukan prediksi digit dari fitur audio"""
     try:
-        # Normalisasi dengan scaler (PENTING: normalize dulu sebelum reshape!)
+        # Normalisasi dengan scaler
         if scaler is not None:
             normalized_features = scaler.transform(audio_features)
         else:
             normalized_features = audio_features
         
-        # Reshape untuk input model (batch_size, timesteps, features)
-        features = normalized_features.reshape(1, normalized_features.shape[0], normalized_features.shape[1])
+        # Cek apakah model adalah SVM (sklearn) atau Keras model
+        if hasattr(model, 'predict_proba'):  # SVM/sklearn model
+            # Flatten features untuk SVM (harus 1D per sample)
+            features = normalized_features.flatten().reshape(1, -1)
+            predictions = model.predict_proba(features)[0]
+            predicted_class = model.predict(features)[0]
+            confidence = predictions[predicted_class]
+        else:  # Keras/Deep Learning model
+            # Reshape untuk input model (batch_size, timesteps, features)
+            features = normalized_features.reshape(1, normalized_features.shape[0], normalized_features.shape[1])
+            predictions = model.predict(features, verbose=0)
+            predicted_class = np.argmax(predictions[0])
+            confidence = predictions[0][predicted_class]
         
-        # Prediksi
-        predictions = model.predict(features, verbose=0)
-        predicted_class = np.argmax(predictions[0])
-        confidence = predictions[0][predicted_class]
-        
-        return predicted_class, confidence, predictions[0]
+        return predicted_class, confidence, predictions
     except Exception as e:
         st.error(f"Error during prediction: {str(e)}")
         return None, None, None
@@ -301,7 +307,7 @@ def main():
             st.markdown("""
                 <div class="metric-card">
                     <h3 style="color: #333;">Akurasi Model</h3>
-                    <h1 style="color: #007bff;">99.4%</h1>
+                    <h1 style="color: #007bff;">98.8%</h1>
                     <p>Test Accuracy</p>
                 </div>
             """, unsafe_allow_html=True)
@@ -319,8 +325,8 @@ def main():
             st.markdown("""
                 <div class="metric-card">
                     <h3 style="color: #333;">Model Type</h3>
-                    <h1 style="color: #007bff;">1D CNN</h1>
-                    <p>Deep Learning</p>
+                    <h1 style="color: #007bff;">SVM</h1>
+                    <p>Machine Learning</p>
                 </div>
             """, unsafe_allow_html=True)
         
@@ -353,7 +359,7 @@ def main():
                         <li>Visualisasi waveform & MFCC</li>
                         <li>Probability distribution chart</li>
                         <li>Confidence score real-time</li>
-                        <li>Akurasi 99.4% (Test set)</li>
+                        <li>Akurasi 98.8% (Test set)</li>
                     </ul>
                 </div>
             """, unsafe_allow_html=True)
@@ -771,8 +777,8 @@ def main():
                 st.markdown("### Model Details")
                 st.json({
                     "Model Name": metadata.get('model_name', 'Unknown'),
-                    "Model Type": "Deep Learning (1D CNN/LSTM)",
-                    "Input Shape": f"({metadata.get('max_length', 93)}, {metadata.get('num_mfcc', 13)})",
+                    "Model Type": "Machine Learning (SVM)",
+                    "Input Shape": f"({metadata.get('max_length', 93)} × {metadata.get('num_mfcc', 13)})",
                     "Output Classes": metadata.get('num_classes', 10),
                     "Training Date": metadata.get('training_date', 'Unknown')
                 })
@@ -799,13 +805,18 @@ def main():
             st.markdown("### Model Architecture")
             
             st.code("""
-1D CNN Architecture:
-├── Input Layer (93, 13)
-├── Conv1D (64 filters, kernel=5) + BatchNorm + MaxPool + Dropout(0.3)
-├── Conv1D (128 filters, kernel=5) + BatchNorm + MaxPool + Dropout(0.3)
-├── Conv1D (256 filters, kernel=3) + BatchNorm + GlobalAvgPool
-├── Dense (128) + Dropout(0.4)
-└── Dense (10, softmax)
+SVM (Support Vector Machine) Architecture:
+├── Input: Flattened MFCC features (93 × 13 = 1,209 features)
+├── Kernel: RBF (Radial Basis Function)
+├── C (Regularization): Optimized via GridSearchCV
+├── Gamma: Optimized via GridSearchCV
+└── Output: 10 classes (softmax probability)
+
+Advantages:
+✓ Excellent generalization
+✓ Effective in high-dimensional space
+✓ Memory efficient
+✓ Robust to overfitting
             """, language="text")
             
             # Feature Extraction
@@ -988,10 +999,10 @@ def main():
         with col1:
             st.markdown("""
             **Model Information:**
-            - Type: 1D CNN (Deep Learning)
-            - Input: MFCC features (93 × 13)
+            - Type: SVM (Machine Learning)
+            - Input: MFCC features (93 × 13 = 1,209 features)
             - Output: 10 classes (digit 0-9)
-            - Framework: TensorFlow/Keras
+            - Framework: Scikit-learn
             """)
         
         with col2:
