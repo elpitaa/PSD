@@ -350,7 +350,8 @@ def main():
                     <h4>Cara Menggunakan</h4>
                     <ol>
                         <li>Pilih menu <b>"Prediksi Audio"</b> di sidebar</li>
-                        <li>Upload file audio atau rekam langsung</li>
+                        <li>Pilih digit (0-9) yang ingin ditest</li>
+                        <li>Pilih nomor sample (1-220)</li>
                         <li>Klik tombol <b>"Prediksi"</b></li>
                         <li>Lihat hasil prediksi dan visualisasi</li>
                     </ol>
@@ -362,11 +363,11 @@ def main():
                 <div class="success-box">
                     <h4>Fitur Utama</h4>
                     <ul>
-                        <li>Upload atau rekam audio langsung</li>
-                        <li>Visualisasi waveform & MFCC</li>
-                        <li>Probability distribution chart</li>
-                        <li>Confidence score real-time</li>
+                        <li>Test dengan 2,200 samples dari dataset</li>
+                        <li>220 samples per digit (0-9)</li>
+                        <li>Visualisasi probability distribution</li>
                         <li>Akurasi 97.2% (Test set)</li>
+                        <li>Hasil reproducible dan reliable</li>
                     </ul>
                 </div>
             """, unsafe_allow_html=True)
@@ -399,31 +400,22 @@ def main():
         
         st.markdown("""
             <div class="info-box">
-                <b>Petunjuk:</b> Pilih metode input (Upload atau Rekam), lalu klik tombol Prediksi.
-                Pastikan audio berisi ucapan digit Arab (0-9) dengan jelas.
+                <b>Petunjuk:</b> Pilih digit (0-9) dan nomor sample dari test dataset untuk melihat prediksi model.
+                Dataset ini berisi 2,200 samples audio yang sudah diproses menjadi MFCC features.
             </div>
         """, unsafe_allow_html=True)
         
-        # WARNING BOX
-        st.warning("""
-            **IMPORTANT NOTE**: Model ini dilatih menggunakan MFCC features dari dataset SpokenArabicDigits. 
-            Prediksi hanya akurat untuk data dengan preprocessing dan karakteristik statistik yang sama dengan training data.
-            
-            **Untuk testing yang reliable, gunakan tab "Test Dengan Dataset".**
+        # INFO BOX
+        st.success("""
+            **Model Performance**: Aplikasi ini menggunakan test dataset dengan 220 samples per digit (total 2,200 samples).
+            Model mencapai akurasi **97.2%** pada dataset ini, memastikan prediksi yang reliable dan reproducible.
         """)
+        st.markdown("### Test Model dengan Dataset Asli")
+        st.info("Pilih sample dari test dataset untuk melihat prediksi yang akurat")
         
-        # Tabs untuk berbagai input method
-        tab1, tab2, tab3 = st.tabs(["Test Dengan Dataset", "Upload File", "Rekam Audio"])
-        
-        audio_source = None
-        
-        with tab1:
-            st.markdown("### Test Model dengan Dataset Asli")
-            st.info("Pilih sample dari test dataset untuk melihat prediksi yang akurat")
-            
-            # Load test data
-            # @st.cache_data  # Temporarily disabled for deployment debugging
-            def load_test_data(base_dir):
+        # Load test data
+        # @st.cache_data  # Temporarily disabled for deployment debugging
+        def load_test_data(base_dir):
                 import os
                 """Load test dataset with error handling for production"""
                 # Check if test data exists
@@ -483,14 +475,7 @@ def main():
             
             # Skip this tab if test data not available
             if X_test is None:
-                st.warning("Tab ini memerlukan test dataset untuk berfungsi.")
-                st.stop()
-            
-            col1, col2 = st.columns(2)
-            with col1:
-                selected_digit = st.selectbox("Pilih Digit (0-9)", range(10))
-            with col2:
-                sample_number = st.selectbox("Pilih Sample Number", range(1, 221))
+            st.warning("Dataset tidak dapat dimuat. Silakan periksa file data.")
             
             # Calculate index
             test_idx = selected_digit * 220 + (sample_number - 1)
@@ -541,7 +526,7 @@ def main():
                     st.markdown("### Distribusi Probabilitas")
                     prob_df = pd.DataFrame({
                         'Digit': [str(i) for i in range(10)],
-                        'Probability': predictions[0] * 100
+                        'Probability': predictions * 100
                     })
                     
                     fig = px.bar(
@@ -554,230 +539,6 @@ def main():
                     )
                     fig.update_layout(height=400)
                     st.plotly_chart(fig, use_container_width=True)
-        
-        with tab2:
-            st.markdown("**Upload file audio dalam format WAV, MP3, M4A, FLAC, atau OGG**")
-            st.warning("Prediksi mungkin tidak akurat untuk audio di luar dataset training")
-            
-            uploaded_file = st.file_uploader(
-                "Pilih file audio",
-                type=['wav', 'mp3', 'm4a', 'flac', 'ogg'],
-                help="Maksimal ukuran file: 200MB"
-            )
-            
-            if uploaded_file is not None:
-                st.audio(uploaded_file, format=f'audio/{uploaded_file.type.split("/")[-1]}')
-                audio_source = ("file", uploaded_file)
-        
-        with tab3:
-            st.markdown("**Rekam digit Arab (0-9) langsung dari mikrofon**")
-            st.warning("Prediksi mungkin tidak akurat untuk audio di luar dataset training")
-            st.info("Klik tombol rekam, ucapkan satu digit Arab dengan jelas, lalu klik stop.")
-            
-            if 'recording_key' not in st.session_state:
-                st.session_state.recording_key = 0
-            
-            recorded_audio = st.audio_input(
-                "Rekam audio",
-                key=f"audio_recorder_{st.session_state.recording_key}"
-            )
-            
-            if recorded_audio is not None:
-                col_audio, col_reset = st.columns([3, 1])
-                with col_audio:
-                    st.audio(recorded_audio)
-                with col_reset:
-                    if st.button("Reset", type="secondary", use_container_width=True):
-                        st.session_state.recording_key += 1
-                        st.rerun()
-                audio_source = ("recorded", recorded_audio)
-        
-        # Tombol Prediksi
-        if audio_source is not None:
-            st.markdown("---")
-            
-            col1, col2, col3 = st.columns([1, 2, 1])
-            
-            with col2:
-                predict_button = st.button(
-                    "PREDIKSI DIGIT", 
-                    use_container_width=True, 
-                    type="primary"
-                )
-            
-            if predict_button:
-                # Progress bar
-                progress_bar = st.progress(0)
-                status_text = st.empty()
-                
-                try:
-                    # Step 1: Load audio
-                    status_text.text("Memuat audio...")
-                    progress_bar.progress(20)
-                    
-                    source_type, audio_file = audio_source
-                    # PENTING: Gunakan sr=11025 sesuai training data!
-                    # Untuk M4A/MP3, save ke temp file dulu
-                    import tempfile
-                    with tempfile.NamedTemporaryFile(delete=False, suffix=f'.{audio_file.name.split(".")[-1]}') as tmp_file:
-                        tmp_file.write(audio_file.read())
-                        tmp_path = tmp_file.name
-                    
-                    audio_data, sr = librosa.load(tmp_path, sr=11025)
-                    
-                    # Clean up temp file
-                    import os
-                    os.unlink(tmp_path)
-                    
-                    audio_file.seek(0)  # Reset pointer
-                    
-                    # Step 2: Extract MFCC
-                    status_text.text("Mengekstrak fitur MFCC...")
-                    progress_bar.progress(40)
-                    
-                    mfcc_features = extract_mfcc(
-                        audio_data, 
-                        sr, 
-                        n_mfcc=metadata['num_mfcc'], 
-                        max_length=metadata['max_length']
-                    )
-                    
-                    if mfcc_features is None:
-                        st.error("Gagal mengekstrak fitur MFCC")
-                        st.stop()
-                    
-                    # Step 3: Predict
-                    status_text.text("Melakukan prediksi...")
-                    progress_bar.progress(70)
-                    
-                    predicted_class, confidence, probabilities = predict_digit(
-                        model, mfcc_features, scaler
-                    )
-                    
-                    if predicted_class is None:
-                        st.error("Gagal melakukan prediksi")
-                        st.stop()
-                    
-                    # Step 4: Display results
-                    status_text.text("Prediksi selesai!")
-                    progress_bar.progress(100)
-                    
-                    # Clear progress indicators
-                    import time
-                    time.sleep(0.5)
-                    progress_bar.empty()
-                    status_text.empty()
-                    
-                    # ===== HASIL PREDIKSI =====
-                    st.markdown("---")
-                    st.markdown("### Hasil Prediksi")
-                    
-                    # Main result
-                    col1, col2, col3 = st.columns(3)
-                    
-                    with col1:
-                        st.markdown(f"""
-                            <div class="success-box" style="text-align: center;">
-                                <h3>Digit Terdeteksi</h3>
-                                <h1 style="font-size: 4rem; margin: 0;">{predicted_class}</h1>
-                            </div>
-                        """, unsafe_allow_html=True)
-                    
-                    if show_confidence:
-                        with col2:
-                            st.metric(
-                                "Confidence Score",
-                                f"{confidence * 100:.2f}%",
-                                delta=None
-                            )
-                        
-                        with col3:
-                            if confidence > 0.9:
-                                status = "Sangat Tinggi"
-                                color = "#28a745"
-                            elif confidence > 0.7:
-                                status = "Tinggi"
-                                color = "#ffc107"
-                            else:
-                                status = "Rendah"
-                                color = "#dc3545"
-                            
-                            st.markdown(f"""
-                                <div style="text-align: center; padding: 1rem;">
-                                    <h4>Status Kepercayaan</h4>
-                                    <h2 style="color: {color};">{status}</h2>
-                                </div>
-                            """, unsafe_allow_html=True)
-                    
-                    # Visualizations
-                    if show_visualizations:
-                        st.markdown("---")
-                        st.markdown("### Visualisasi")
-                        
-                        viz_tab1, viz_tab2, viz_tab3 = st.tabs(
-                            ["Waveform", "MFCC Features", "Probabilities"]
-                        )
-                        
-                        with viz_tab1:
-                            fig_waveform = plot_waveform(audio_data, sr)
-                            st.plotly_chart(fig_waveform, use_container_width=True)
-                        
-                        with viz_tab2:
-                            fig_mfcc = plot_mfcc(mfcc_features)
-                            st.plotly_chart(fig_mfcc, use_container_width=True)
-                        
-                        with viz_tab3:
-                            fig_prob = plot_probabilities(
-                                probabilities, 
-                                metadata['class_names']
-                            )
-                            st.plotly_chart(fig_prob, use_container_width=True)
-                    
-                    # Probability table
-                    if show_probabilities:
-                        st.markdown("---")
-                        st.markdown("### Probabilitas per Kelas")
-                        
-                        prob_df = pd.DataFrame({
-                            'Digit': metadata['class_names'],
-                            'Probability': [f"{p:.4f}" for p in probabilities],
-                            'Percentage': [f"{p*100:.2f}%" for p in probabilities]
-                        })
-                        
-                        # Highlight predicted class
-                        def highlight_max(s):
-                            is_max = s == s.max()
-                            return ['background-color: #d4edda' if v else '' for v in is_max]
-                        
-                        st.dataframe(
-                            prob_df.style.apply(
-                                lambda x: ['background-color: #d4edda' if x.name == predicted_class else '' for i in x],
-                                axis=1
-                            ),
-                            use_container_width=True,
-                            hide_index=True
-                        )
-                    
-                    # Download results
-                    st.markdown("---")
-                    result_data = {
-                        'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-                        'predicted_digit': int(predicted_class),
-                        'confidence': float(confidence),
-                        'probabilities': probabilities.tolist()
-                    }
-                    
-                    st.download_button(
-                        "Download Hasil (JSON)",
-                        data=json.dumps(result_data, indent=2),
-                        file_name=f"prediction_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json",
-                        mime="application/json"
-                    )
-                    
-                except Exception as e:
-                    progress_bar.empty()
-                    status_text.empty()
-                    st.error(f"Terjadi kesalahan: {str(e)}")
     
     # ========================================
     # PAGE: INFORMASI MODEL
