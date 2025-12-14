@@ -486,63 +486,66 @@ def main():
         
         # Calculate index
         test_idx = selected_digit * 220 + (sample_number - 1)
-            
-            st.markdown(f"""
-                **Sample Info:**
-                - Digit: **{selected_digit}**
-                - Sample: **{sample_number}/220**
-                - Index: {test_idx}
-            """)
-            
-            if st.button("PREDIKSI DARI DATASET", use_container_width=True, type="primary"):
-                with st.spinner("Memproses data..."):
-                    sample = X_test[test_idx]
-                    true_label = y_test[test_idx]
-                    
-                    # Normalize dan predict - support both SVM and CNN
-                    if hasattr(model, 'predict_proba'):  # SVM
-                        # Flatten untuk SVM
-                        sample_flat = sample.flatten().reshape(1, -1)
-                        normalized = scaler.transform(sample_flat)
-                        predictions = model.predict_proba(normalized)[0]
-                        predicted_class = model.predict(normalized)[0]
-                        confidence = predictions[predicted_class]
-                    else:  # CNN
-                        normalized = scaler.transform(sample)
-                        features = normalized.reshape(1, 93, 13)
-                        predictions = model.predict(features, verbose=0)
-                        predicted_class = np.argmax(predictions[0])
-                        confidence = predictions[0][predicted_class]
-                    
-                    # Display results
-                    st.markdown("---")
-                    st.markdown("### Hasil Prediksi")
-                    
-                    col1, col2, col3 = st.columns(3)
-                    with col1:
-                        st.metric("True Label", true_label)
-                    with col2:
-                        st.metric("Predicted", predicted_class)
-                    with col3:
-                        is_correct = "CORRECT" if predicted_class == true_label else "WRONG"
-                        st.metric("Status", is_correct)
-                    
-                    st.success(f"**Confidence:** {confidence*100:.2f}%")
-                    
-                    # Probability distribution
-                    st.markdown("### Distribusi Probabilitas")
-                    prob_df = pd.DataFrame({
-                        'Digit': [str(i) for i in range(10)],
-                        'Probability': predictions * 100
-                    })
-                    
-                    fig = px.bar(
-                        prob_df, 
-                        x='Digit', 
-                        y='Probability',
-                        color='Probability',
-                        color_continuous_scale='Viridis',
-                        title='Probabilitas Setiap Digit'
+        
+        st.markdown(f"""
+            **Sample Info:**
+            - Digit: **{selected_digit}**
+            - Sample: **{sample_number}/220**
+            - Index: {test_idx}
+        """)
+        
+        if st.button("PREDIKSI DARI DATASET", use_container_width=True, type="primary"):
+            with st.spinner("Memproses data..."):
+                sample = X_test[test_idx]
+                true_label = y_test[test_idx]
+                
+                # Normalize dan predict - support both SVM and CNN
+                if hasattr(model, 'predict_proba'):  # SVM
+                    # Flatten untuk SVM
+                    sample_flat = sample.flatten().reshape(1, -1)
+                    normalized = scaler.transform(sample_flat)
+                    predictions = model.predict_proba(normalized)[0]
+                    predicted_class = model.predict(normalized)[0]
+                    confidence = predictions[predicted_class]
+                else:  # CNN
+                    normalized = scaler.transform(sample)
+                    features = normalized.reshape(1, 93, 13)
+                    predictions = model.predict(features, verbose=0)
+                    predicted_class = np.argmax(predictions[0])
+                    confidence = predictions[0][predicted_class]
+                
+                # Display results
+                st.markdown("---")
+                st.markdown("### Hasil Prediksi")
+                
+                col1, col2, col3 = st.columns(3)
+                with col1:
+                    st.metric("True Label", true_label)
+                with col2:
+                    st.metric("Predicted", predicted_class)
+                with col3:
+                    is_correct = "CORRECT" if predicted_class == true_label else "WRONG"
+                    st.metric("Status", is_correct)
+                
+                st.success(f"**Confidence:** {confidence*100:.2f}%")
+                
+                # Probability distribution
+                st.markdown("### Distribusi Probabilitas")
+                prob_df = pd.DataFrame({
+                    'Digit': [str(i) for i in range(10)],
+                    'Probability': predictions * 100
+                })
+                
+                fig = px.bar(
+                    prob_df, 
+                    x='Digit', 
+                    y='Probability',
+                    color='Probability',
+                    color_continuous_scale='Viridis',
+                    title='Probabilitas Setiap Digit'
+                )
+                fig.update_layout(height=400)
+                st.plotly_chart(fig, use_container_width=True)
                     )
                     fig.update_layout(height=400)
                     st.plotly_chart(fig, use_container_width=True)
