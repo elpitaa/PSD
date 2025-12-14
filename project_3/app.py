@@ -500,12 +500,20 @@ def main():
                     sample = X_test[test_idx]
                     true_label = y_test[test_idx]
                     
-                    # Normalize dan predict
-                    normalized = scaler.transform(sample)
-                    features = normalized.reshape(1, 93, 13)
-                    predictions = model.predict(features, verbose=0)
-                    predicted_class = np.argmax(predictions[0])
-                    confidence = predictions[0][predicted_class]
+                    # Normalize dan predict - support both SVM and CNN
+                    if hasattr(model, 'predict_proba'):  # SVM
+                        # Flatten untuk SVM
+                        sample_flat = sample.flatten().reshape(1, -1)
+                        normalized = scaler.transform(sample_flat)
+                        predictions = model.predict_proba(normalized)[0]
+                        predicted_class = model.predict(normalized)[0]
+                        confidence = predictions[predicted_class]
+                    else:  # CNN
+                        normalized = scaler.transform(sample)
+                        features = normalized.reshape(1, 93, 13)
+                        predictions = model.predict(features, verbose=0)
+                        predicted_class = np.argmax(predictions[0])
+                        confidence = predictions[0][predicted_class]
                     
                     # Display results
                     st.markdown("---")
