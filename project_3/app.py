@@ -20,6 +20,12 @@ import warnings
 warnings.filterwarnings('ignore')
 
 # ========================================
+# GLOBAL CONFIGURATION
+# ========================================
+# Get base directory where app.py is located
+BASE_DIR = os.path.dirname(os.path.abspath(__file__)) if '__file__' in globals() else os.getcwd()
+
+# ========================================
 # KONFIGURASI HALAMAN
 # ========================================
 st.set_page_config(
@@ -46,8 +52,7 @@ def load_model_and_metadata():
         metadata = None
         
         try:
-            # Get directory where app.py is located
-            BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+            # Use global BASE_DIR
             
             # Memuat metadata
             metadata_path = os.path.join(BASE_DIR, 'model_metadata.json')
@@ -429,8 +434,7 @@ def main():
                     
                     return sequences, np.array(labels[:len(sequences)])
                 
-                # Get path to test data (relative to app.py location)
-                BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+                # Use global BASE_DIR for test data path
                 test_data_path = os.path.join(BASE_DIR, '..', 'tugas', 'data', 'Test_Arabic_Digit.txt')
                 
                 X_test_raw, y_test = parse_file(test_data_path, blocks_per_digit=220)
