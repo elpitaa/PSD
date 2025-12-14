@@ -405,7 +405,7 @@ def main():
             
             # Load test data
             @st.cache_data
-            def load_test_data():
+            def load_test_data(base_dir):
                 def parse_file(filepath, blocks_per_digit):
                     sequences = []
                     current_sequence = []
@@ -434,8 +434,8 @@ def main():
                     
                     return sequences, np.array(labels[:len(sequences)])
                 
-                # Use global BASE_DIR for test data path
-                test_data_path = os.path.join(BASE_DIR, '..', 'tugas', 'data', 'Test_Arabic_Digit.txt')
+                # Use passed base_dir for test data path
+                test_data_path = os.path.join(base_dir, '..', 'tugas', 'data', 'Test_Arabic_Digit.txt')
                 
                 X_test_raw, y_test = parse_file(test_data_path, blocks_per_digit=220)
                 
@@ -454,7 +454,7 @@ def main():
                 X_test = pad_sequences(X_test_raw, 93)
                 return X_test, y_test
             
-            X_test, y_test = load_test_data()
+            X_test, y_test = load_test_data(BASE_DIR)
             
             col1, col2 = st.columns(2)
             with col1:
