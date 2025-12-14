@@ -16,3 +16,4 @@ chapters:
   - file: Prediksi Nilai NO2 Satu Hari Kedepan dengan KNN Regression
   - file: Identifikasi_Suara_Buka_Tutup
   - file: perhitungan jarak DTW antara data lama dan data baru
+  - file: arabic_digit_classification
